@@ -9,7 +9,7 @@ function toggle() {
 
 if (joinNowButton) {
 	joinNowButton.addEventListener("click", () => {
-		window.location.href = "log_in.html";
+		window.location.href = "../../log_in.html";
 	});
 }
 
