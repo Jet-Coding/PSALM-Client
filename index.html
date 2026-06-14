@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>PSALM</title>
+		<link rel="icon" type="image/ico" href="images/PSALM.ico" />
+		<link
+			rel="stylesheet"
+			href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css" />
+		<link
+			href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+			rel="stylesheet" />
+
+		<link rel="stylesheet" href="assets/css/style.css" />
+	</head>
+	<body>
+		<!-- Navigation -->
+		<nav>
+			<div class="logo">
+				<a href="#">
+					<img
+						src="assets/images/PSALM_Lg.png"
+						alt="PSALM Logo"
+						class="logo-image" />
+					<span class="brand-name">PSALM</span>
+				</a>
+			</div>
+
+			<ul class="nav-links">
+				<li><a href="public/index.html" class="active">Home</a></li>
+				<li><a href="public/about.html">About</a></li>
+				<li><a href="public/campus.html">Campus</a></li>
+				<li><a href="public/programs.html">Programs</a></li>
+				<li><a href="public/national.html">National Officers</a></li>
+			</ul>
+			<button class="cta-button">Get Involved</button>
+			<input type="checkbox" id="menu-btn" class="menu-btn" />
+
+			<label for="menu-btn" class="menu-icon">
+				<i class="bx bx-menu" id="menu-open" onclick="toggle()"></i>
+				<i class="bx bx-x" id="menu-close" onclick="toggle()"></i>
+			</label>
+		</nav>
+
+		<!-- Hero Section -->
+		<div class="hero">
+			<div class="overlay">
+				<h1>PSALM</h1>
+				<p>Reach The Campus, Transform The World.</p>
+			</div>
+		</div>
+
+		<!-- History Section -->
+		<section id="history-section">
+			<h2 class="section-title">Who We Are</h2>
+			<div class="container">
+				<div class="history-content">
+					<h3>Raising Student Leaders for Christ since 1969</h3>
+
+					<p class="mission-statement">
+						<strong>PSALM</strong> is a campus and marketplace ministry that
+						envisions to produce dynamic servant leaders committed to
+						transforming the world.
+					</p>
+					<br />
+					<p class="history-statement">
+						It was established on <strong>August 8, 1969</strong> as College
+						Youth Center (CYC) in Zamboanga City through
+						<strong>Dr. Joseph Arthur</strong>.
+					</p>
+				</div>
+				<div class="community-image">
+					<img src="assets/images/community.jpg" alt="Community Image" />
+				</div>
+			</div>
+		</section>
+
+		<!-- <section id="stats">
+			<div class="page-header">
+				<div>
+					<h1>Statistics</h1>
+					<small> Ministry operation from August to December 2025. </small>
+				</div>
+			</div>
+			<div class="cards">
+				<div class="card-single">
+					<div class="card-flex">
+						<div class="card-info">
+							<div class="card-head">
+								<span>Evangelistic Contact</span>
+								<small>Individuals shared with the Gospel</small>
+							</div>
+
+							<h2>13,001</h2>
+
+							 <small>2% less purchase</small> 
+						</div>
+						<div class="card-chart moderate">
+							<span class="las la-chart-line"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-single">
+					<div class="card-flex">
+						<div class="card-info">
+							<div class="card-head">
+								<span>Spiritual Interests</span>
+								<small>Prayed to receive the Lord Jesus Christ</small>
+							</div>
+
+							<h2>11,139</h2>
+
+							 <small>10% less refunds</small> 
+						</div>
+						<div class="card-chart success">
+							<span class="las la-chart-line"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-single">
+					<div class="card-flex">
+						<div class="card-info">
+							<div class="card-head">
+								<span>Enrolled</span>
+								<small>Enrolled in our Caring Circles</small>
+							</div>
+
+							<h2>21,108</h2>
+
+							<small>2% less visitors</small> 
+						</div>
+					</div>
+				</div>
+			</div>
+		</section> -->
+
+		<!-- Testimonials Section -->
+		<section id="testimonials">
+			<div class="testimonials-container">
+				<h2>Testimonials</h2>
+				<div class="testimonial-slider">
+					<div class="slider-wrapper">
+						<div class="testimonial-card">
+							<div class="testimonial-header">
+								<img
+									src="assets/images/Jason_Gamalo.jpg"
+									alt="Jason C. Gamalo"
+									class="profile-pic" />
+								<div class="profile-info">
+									<p class="name">Jason C. Gamalo</p>
+									<p class="role">National Training Director</p>
+								</div>
+							</div>
+							<p class="quote">
+								"Being part of PSALM has truly transformed my life. This
+								ministry not only helped me grow in my faith but also equipped
+								me to become a servant leader."
+							</p>
+						</div>
+
+						<div class="testimonial-card">
+							<div class="testimonial-header">
+								<img
+									src="assets/images/PSALM_Logo_Whith_Background.png"
+									alt="Myra T. Yabut"
+									class="profile-pic" />
+								<div class="profile-info">
+									<p class="name">Myra T. Yabut</p>
+									<p class="role">National Board Member</p>
+								</div>
+							</div>
+							<p class="quote">
+								"Serving with PSALM has been an incredible journey of faith and
+								growth. I’ve seen lives transformed and leaders raised."
+							</p>
+						</div>
+
+						<div class="testimonial-card">
+							<div class="testimonial-header">
+								<img
+									src="assets/images/Jun_Mark_Dapitan.jpg"
+									alt="Jun Marc Dapitan"
+									class="profile-pic" />
+								<div class="profile-info">
+									<p class="name">Jun Marc Dapitan</p>
+									<p class="role">Digital Ministry Coordinator</p>
+								</div>
+							</div>
+							<p class="quote">
+								"PSALM has remained faithful to its mission of raising servant
+								leaders who transform communities for Christ."
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="dots-container">
+					<span class="dot active"></span>
+					<span class="dot"></span>
+					<span class="dot"></span>
+				</div>
+			</div>
+		</section>
+
+		<!-- Contact Section -->
+		<section class="contact" id="contact">
+			<h2 class="section-title">Contact Us</h2>
+			<div class="contact-container">
+				<form class="contact-form">
+					<input type="text" placeholder="Your Name" required />
+					<input type="email" placeholder="Your Email" required />
+					<input type="text" placeholder="Subject" />
+					<textarea rows="5" placeholder="Your Message" required></textarea>
+					<button type="submit" class="cta-button">Send Message</button>
+				</form>
+				<div class="contact-info">
+					<h3>Contact Information</h3>
+					<p>
+						<strong>Address:</strong> VH Garces Street, Talisay, Cebu,
+						Philippines
+					</p>
+					<p><strong>Phone:</strong> +63 917 303 7257</p>
+					<p><strong>Email:</strong> psalm.nationaloffice@gmail.com</p>
+					<br />
+					<!-- <h3>Service Times</h3>
+					<p>Sunday: 9:00 AM & 11:00 AM</p>
+					<p>Wednesday: 7:00 PM</p> -->
+				</div>
+			</div>
+		</section>
+
+		<!-- Footer Section -->
+		<footer>
+			<div class="footer-grid">
+				<div class="footer-col">
+					<h4>CONNECT</h4>
+					<p>Contact Us</p>
+				</div>
+				<div class="footer-col">
+					<h4>RESOURCES</h4>
+					<p>Download App</p>
+				</div>
+				<div class="footer-col">
+					<h4>GET INVOLVED</h4>
+					<p>Give / Pray</p>
+				</div>
+			</div>
+			<div class="social-links">
+				<a href="#" class="social-icon">
+					<i class="bx bxl-facebook"></i>
+				</a>
+				<a href="#" class="social-icon">
+					<i class="bx bxl-twitter"></i>
+				</a>
+				<a href="#" class="social-icon">
+					<i class="bx bxl-instagram"></i>
+				</a>
+				<a href="#" class="social-icon">
+					<i class="bx bxl-youtube"></i>
+				</a>
+			</div>
+			<p>
+				&copy; 1969-2025 PSALM. All rights reserved. |
+				<a href="#">Privacy Policy</a>
+			</p>
+		</footer>
+		<script src="public/js/script.js"></script>
+	</body>
+</html>
