@@ -224,7 +224,6 @@ nav {
 }
 
 /* --- Analytics Section --- */
-/* --- 
 #stats {
 	padding: 1rem;
 	background: var(--lightdark);
@@ -296,7 +295,6 @@ nav {
 .card-chart.moderate span {
 	color: var(--status-yellow);
 }
---- */
 
 /* --- Testimonials Section --- */
 #testimonials {
@@ -308,7 +306,7 @@ nav {
 }
 
 .testimonials-container {
-	max-width: 1100px;
+	max-width: 600px;
 	margin: 0 auto;
 	overflow: hidden;
 }

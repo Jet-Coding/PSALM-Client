@@ -1,5 +1,5 @@
 const joinNowButton = document.getElementById("joinButton");
-/* const wrapper = document.querySelector(".slider-wrapper"); */
+//const wrapper = document.querySelector(".slider-wrapper");
 const dots = document.querySelectorAll(".dot");
 let menu = document.querySelector(".nav-links");
 
@@ -13,7 +13,7 @@ if (joinNowButton) {
 	});
 }
 
-/* if (wrapper && dots.length > 0) {
+/*if (wrapper && dots.length > 0) {
 	let currentIndex = 0;
 	const totalSlides = dots.length;
 
@@ -49,7 +49,20 @@ if (joinNowButton) {
 		"mouseleave",
 		() => (scrollInterval = startAutoscroll()),
 	);
-} */
+}*/
+
+document.getElementById("readMoreBtn").addEventListener("click", function () {
+	const moreText = document.querySelector(".more-text");
+	const btnText = document.getElementById("readMoreBtn");
+
+	if (moreText.style.display === "none") {
+		moreText.style.display = "inline"; // Or "block" depending on your layout
+		btnText.innerHTML = "READ LESS";
+	} else {
+		moreText.style.display = "none";
+		btnText.innerHTML = "READ MORE";
+	}
+});
 
 document.addEventListener("DOMContentLoaded", () => {
 	const modal = document.getElementById("programModal");
@@ -81,17 +94,4 @@ document.addEventListener("DOMContentLoaded", () => {
 	window.onclick = (e) => {
 		if (e.target === modal) closeModal();
 	};
-});
-
-document.getElementById("readMoreBtn").addEventListener("click", function () {
-	const moreText = document.querySelector(".more-text");
-	const btnText = document.getElementById("readMoreBtn");
-
-	if (moreText.style.display === "none") {
-		moreText.style.display = "inline"; // Or "block" depending on your layout
-		btnText.innerHTML = "READ LESS";
-	} else {
-		moreText.style.display = "none";
-		btnText.innerHTML = "READ MORE";
-	}
 });
