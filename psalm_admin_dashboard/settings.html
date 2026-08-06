@@ -1,0 +1,782 @@
+<!doctype html>
+
+<html class="light" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+		<title>PSALM Admin - Settings</title>
+		<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400&amp;display=swap"
+			rel="stylesheet" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+			rel="stylesheet" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+			rel="stylesheet" />
+		<script id="tailwind-config">
+			tailwind.config = {
+				darkMode: "class",
+				theme: {
+					extend: {
+						colors: {
+							"inverse-surface": "#2e312e",
+							tertiary: "#0d3224",
+							"primary-container": "#004d30",
+							"surface-container-low": "#f2f4ef",
+							"on-secondary": "#ffffff",
+							"outline-variant": "#bfc9c0",
+							"on-primary-fixed-variant": "#085134",
+							"on-tertiary-fixed-variant": "#2a4e3d",
+							primary: "#00341f",
+							"on-background": "#191c1a",
+							"inverse-primary": "#93d5ae",
+							"surface-container-high": "#e6e9e4",
+							"on-error-container": "#93000a",
+							"tertiary-fixed-dim": "#a8cfba",
+							"on-tertiary": "#ffffff",
+							"inverse-on-surface": "#eff1ed",
+							"secondary-fixed": "#a3f69c",
+							"tertiary-container": "#264939",
+							secondary: "#1b6d24",
+							"primary-fixed": "#aef1c9",
+							"tertiary-fixed": "#c4ecd5",
+							"on-primary-container": "#7cbd98",
+							"surface-container-lowest": "#ffffff",
+							"on-surface-variant": "#404942",
+							"surface-variant": "#e1e3de",
+							"surface-container": "#ecefea",
+							"on-tertiary-fixed": "#002114",
+							"on-tertiary-container": "#91b7a3",
+							"on-secondary-container": "#217128",
+							"on-primary-fixed": "#002112",
+							background: "#f8faf5",
+							"surface-bright": "#f8faf5",
+							"on-primary": "#ffffff",
+							outline: "#707972",
+							"surface-dim": "#d8dbd6",
+							"on-error": "#ffffff",
+							"error-container": "#ffdad6",
+							"surface-container-highest": "#e1e3de",
+							"on-secondary-fixed": "#002204",
+							"surface-tint": "#296a4a",
+							"secondary-fixed-dim": "#88d982",
+							"secondary-container": "#a0f399",
+							"on-secondary-fixed-variant": "#005312",
+							"primary-fixed-dim": "#93d5ae",
+							"on-surface": "#191c1a",
+							error: "#ba1a1a",
+							surface: "#f8faf5",
+						},
+						borderRadius: {
+							DEFAULT: "0.125rem",
+							lg: "0.25rem",
+							xl: "0.5rem",
+							full: "0.75rem",
+						},
+						spacing: {
+							sm: "12px",
+							md: "16px",
+							"container-padding": "24px",
+							xs: "4px",
+							gutter: "16px",
+							"sidebar-width": "260px",
+							lg: "24px",
+							base: "8px",
+							xl: "32px",
+						},
+						fontFamily: {
+							h2: ["Inter"],
+							"body-sm": ["Inter"],
+							h1: ["Inter"],
+							code: ["JetBrains Mono"],
+							"body-md": ["Inter"],
+							"label-md": ["Inter"],
+							h3: ["Inter"],
+						},
+						fontSize: {
+							h2: [
+								"20px",
+								{
+									lineHeight: "28px",
+									letterSpacing: "-0.01em",
+									fontWeight: "600",
+								},
+							],
+							"body-sm": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+							h1: [
+								"24px",
+								{
+									lineHeight: "32px",
+									letterSpacing: "-0.02em",
+									fontWeight: "600",
+								},
+							],
+							code: ["13px", { lineHeight: "20px", fontWeight: "400" }],
+							"body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+							"label-md": [
+								"12px",
+								{
+									lineHeight: "16px",
+									letterSpacing: "0.05em",
+									fontWeight: "500",
+								},
+							],
+							h3: ["16px", { lineHeight: "24px", fontWeight: "600" }],
+						},
+					},
+				},
+			};
+		</script>
+		<style>
+			body {
+				background-color: #f4f7f6;
+				color: #191c1a;
+				-webkit-font-smoothing: antialiased;
+			}
+			.card-shadow {
+				box-shadow:
+					0px 1px 3px rgba(0, 0, 0, 0.05),
+					0px 4px 6px rgba(0, 0, 0, 0.02);
+			}
+			.sidebar-item-active {
+				background-color: rgba(255, 255, 255, 0.1);
+				border-left: 4px solid #ffffff;
+				color: #ffffff;
+				font-weight: 700;
+			}
+			.material-symbols-outlined {
+				font-variation-settings:
+					"FILL" 0,
+					"wght" 400,
+					"GRAD" 0,
+					"opsz" 24;
+			}
+		</style>
+	</head>
+	<body class="font-body-md text-body-md">
+		<!-- BEGIN: Sidebar -->
+		<aside
+			class="fixed inset-y-0 left-0 z-50 w-64 bg-[#064e3b] text-white transition-all duration-300 transform lg:translate-x-0 -translate-x-full lg:inset-0"
+			data-purpose="navigation-sidebar"
+			id="sidebar">
+			<div class="flex items-center justify-between h-16 px-6 bg-[#064e3b]">
+				<span class="text-2xl font-bold tracking-wider">PSALM</span
+				><button
+					class="hidden lg:flex p-1 hover:bg-green-800 rounded transition-colors ml-auto"
+					id="sidebar-collapse-toggle">
+					<span class="material-symbols-outlined">chevron_left</span>
+				</button>
+			</div>
+			<nav class="mt-4 px-2 space-y-1 overflow-y-auto max-h-[calc(100vh-80px)]">
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="admin_dashboard.html">
+					<svg
+						class="w-5 h-5 mr-3"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+					</svg>
+					Dashboard
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="departments.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+					</svg>
+					Departments
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="board_of_trustees.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+					</svg>
+					Board of Trustees
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="campus_missionaries.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+					</svg>
+					Campus Missionaries
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="master_list.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+					</svg>
+					Master List
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="statistics.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0h6m2 0h2a2 2 0 002-2v-7a2 2 0 00-2-2h-2a2 2 0 00-2 2v7a2 2 0 002 2z"></path>
+					</svg>
+					Statistics
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="training.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+					</svg>
+					Training
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="partnership_development.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+					</svg>
+					Partnership Development
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="team.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+					</svg>
+					Team Analytics
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="user_management.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+					</svg>
+					User &amp; Role Management
+				</a>
+			</nav>
+			<div class="mt-auto px-4 space-y-4">
+				<div class="pt-4 border-t border-white/10 space-y-1">
+					<a
+						class="flex items-center px-4 py-3 bg-white text-emerald-900 rounded-sm font-semibold transition-colors duration-200"
+						href="settings.html">
+						<svg
+							class="w-5 h-5 mr-3 opacity-80"
+							fill="none"
+							stroke="currentColor"
+							viewbox="0 0 24 24">
+							<path
+								d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+							<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+						</svg>
+						Settings
+					</a>
+					<a
+						class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+						href="logout.html">
+						<svg
+							class="w-5 h-5 mr-3 opacity-80"
+							fill="none"
+							stroke="currentColor"
+							viewbox="0 0 24 24">
+							<path
+								d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+						</svg>
+						Logout
+					</a>
+				</div>
+			</div>
+		</aside>
+		<!-- Top App Bar -->
+		<header
+			class="flex justify-between items-center px-lg py-md ml-sidebar-width w-[calc(100%-260px)] bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline fixed top-0 z-10">
+			<div class="flex items-center gap-lg">
+				<h2
+					class="font-h2 text-h2 font-black text-primary dark:text-primary-fixed">
+					Settings
+				</h2>
+				<div class="relative">
+					<span
+						class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant"
+						data-icon="search"
+						>search</span
+					>
+					<input
+						class="pl-xl pr-md py-xs bg-surface-container-low border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all w-64"
+						placeholder="Search settings..."
+						type="text" />
+				</div>
+			</div>
+			<div class="flex items-center gap-md">
+				<button
+					class="p-xs text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+					<span class="material-symbols-outlined" data-icon="notifications"
+						>notifications</span
+					>
+				</button>
+				<button
+					class="p-xs text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+					<span class="material-symbols-outlined" data-icon="help_outline"
+						>help_outline</span
+					>
+				</button>
+				<button
+					class="p-xs text-primary font-bold border-b-2 border-primary pb-1 flex items-center gap-xs">
+					<span
+						class="material-symbols-outlined"
+						data-icon="settings"
+						style="font-variation-settings: &quot;FILL&quot; 1"
+						>settings</span
+					>
+					<span class="font-label-md uppercase tracking-wider">Settings</span>
+				</button>
+			</div>
+		</header>
+		<!-- Main Content Area -->
+		<main class="ml-sidebar-width pt-[80px] p-lg min-h-screen">
+			<div class="max-w-6xl mx-auto">
+				<!-- Settings Layout: Sidebar-styled tabs + Bento Grid for content -->
+				<div class="grid grid-cols-12 gap-lg">
+					<!-- Settings Sidebar -->
+					<nav class="col-span-3 flex flex-col gap-xs">
+						<a
+							class="flex items-center gap-md px-md py-sm bg-white card-shadow rounded-lg border-l-4 border-primary text-primary font-bold transition-all"
+							href="#general">
+							<span class="material-symbols-outlined" data-icon="tune"
+								>tune</span
+							>
+							<span>General</span>
+						</a>
+						<a
+							class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all"
+							href="#profile">
+							<span class="material-symbols-outlined" data-icon="account_circle"
+								>account_circle</span
+							>
+							<span>Profile Management</span>
+						</a>
+						<a
+							class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all"
+							href="#notifications">
+							<span
+								class="material-symbols-outlined"
+								data-icon="notifications_active"
+								>notifications_active</span
+							>
+							<span>Notifications</span>
+						</a>
+						<a
+							class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all"
+							href="#security">
+							<span class="material-symbols-outlined" data-icon="security"
+								>security</span
+							>
+							<span>Security &amp; API</span>
+						</a>
+						<a
+							class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all"
+							href="#teams">
+							<span class="material-symbols-outlined" data-icon="badge"
+								>badge</span
+							>
+							<span>Team Access</span>
+						</a>
+					</nav>
+					<!-- Settings Content Bento Grid -->
+					<div class="col-span-9 space-y-lg">
+						<!-- Profile Management Card -->
+						<section
+							class="bg-white rounded-xl card-shadow border border-outline-variant overflow-hidden"
+							id="profile">
+							<div
+								class="px-lg py-md border-b border-surface-variant flex justify-between items-center">
+								<h3 class="font-h3 text-h3 text-primary">Profile Management</h3>
+								<button
+									class="bg-primary text-white px-md py-xs rounded-lg font-label-md uppercase tracking-wider hover:brightness-110 transition-all">
+									Save Changes
+								</button>
+							</div>
+							<div class="p-lg grid grid-cols-2 gap-xl">
+								<div
+									class="flex flex-col items-center justify-center p-xl border-2 border-dashed border-outline-variant rounded-xl bg-surface-container-lowest">
+									<div class="relative w-32 h-32 mb-md">
+										<img
+											alt="Profile Photo"
+											class="w-full h-full rounded-full object-cover border-4 border-white shadow-md"
+											data-alt="A detailed, clean avatar for an administrative user, featuring a professional person with a friendly expression. The background is a solid, soft mint green color that aligns with the forest admin theme. The lighting is bright and studio-quality, ensuring every detail of the professional attire is visible and crisp."
+											src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJU9Wel_vcnSzdUa1-bXhBVGrgl2jcQWrwCAMHat1Sx4FpyQV4y8HZ0ppyqH2iW55Lq83qRxHs-I4aYZpDd8prBSRnuJly1DNWnYDKm_ynzW9GpyAr-F7CUe520VgEvCxrvx4xqi_IIw6hFq7asvlJV0Vty5F_Mymy1onuOzX8dWYrAxkJT0H8Z5OBtiTODP-YtilDm8DMsqQuQVkZSID-NtMuspHSCk3vuVjhEqUPw359qDhTIZCRHx3_DpJIF3uY1NDOA7cZzKz9" />
+										<button
+											class="absolute bottom-0 right-0 bg-primary text-white p-xs rounded-full shadow-lg">
+											<span
+												class="material-symbols-outlined text-sm"
+												data-icon="edit"
+												>edit</span
+											>
+										</button>
+									</div>
+									<p class="font-label-md text-on-surface-variant">
+										Recommended size: 400x400px
+									</p>
+								</div>
+								<div class="space-y-md">
+									<div>
+										<label
+											class="block font-label-md text-on-surface-variant mb-xs"
+											>Full Name</label
+										>
+										<input
+											class="w-full px-md py-xs border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"
+											type="text"
+											value="Administrative Lead" />
+									</div>
+									<div>
+										<label
+											class="block font-label-md text-on-surface-variant mb-xs"
+											>Email Address</label
+										>
+										<input
+											class="w-full px-md py-xs border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"
+											type="email"
+											value="admin@psalm-portal.org" />
+									</div>
+									<div>
+										<label
+											class="block font-label-md text-on-surface-variant mb-xs"
+											>Job Title</label
+										>
+										<input
+											class="w-full px-md py-xs border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"
+											type="text"
+											value="Organization Administrator" />
+									</div>
+								</div>
+							</div>
+						</section>
+						<!-- Notification Preferences & General -->
+						<div class="grid grid-cols-2 gap-lg">
+							<!-- Notification Preferences -->
+							<section
+								class="bg-white rounded-xl card-shadow border border-outline-variant"
+								id="notifications">
+								<div class="px-lg py-md border-b border-surface-variant">
+									<h3 class="font-h3 text-h3 text-primary">
+										Notification Preferences
+									</h3>
+								</div>
+								<div class="p-lg space-y-md">
+									<div class="flex items-center justify-between">
+										<div>
+											<p class="font-bold text-sm">Email Digest</p>
+											<p class="text-xs text-on-surface-variant">
+												Weekly summary of activity
+											</p>
+										</div>
+										<div
+											class="w-10 h-5 bg-primary rounded-full relative cursor-pointer">
+											<div
+												class="absolute right-1 top-1 w-3 h-3 bg-white rounded-full"></div>
+										</div>
+									</div>
+									<div class="flex items-center justify-between">
+										<div>
+											<p class="font-bold text-sm">New Missionary Alerts</p>
+											<p class="text-xs text-on-surface-variant">
+												Instant push notifications
+											</p>
+										</div>
+										<div
+											class="w-10 h-5 bg-surface-container-high rounded-full relative cursor-pointer">
+											<div
+												class="absolute left-1 top-1 w-3 h-3 bg-white rounded-full"></div>
+										</div>
+									</div>
+									<div class="flex items-center justify-between">
+										<div>
+											<p class="font-bold text-sm">System Updates</p>
+											<p class="text-xs text-on-surface-variant">
+												Maintenance and feature news
+											</p>
+										</div>
+										<div
+											class="w-10 h-5 bg-primary rounded-full relative cursor-pointer">
+											<div
+												class="absolute right-1 top-1 w-3 h-3 bg-white rounded-full"></div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<!-- General Settings -->
+							<section
+								class="bg-white rounded-xl card-shadow border border-outline-variant"
+								id="general">
+								<div class="px-lg py-md border-b border-surface-variant">
+									<h3 class="font-h3 text-h3 text-primary">
+										Regional Settings
+									</h3>
+								</div>
+								<div class="p-lg space-y-md">
+									<div>
+										<label
+											class="block font-label-md text-on-surface-variant mb-xs"
+											>Default Timezone</label
+										>
+										<select
+											class="w-full px-md py-xs border border-outline-variant rounded-lg appearance-none bg-white">
+											<option>UTC +8:00 (Manila, Singapore)</option>
+											<option>UTC +0:00 (GMT)</option>
+											<option>UTC -5:00 (EST)</option>
+										</select>
+									</div>
+									<div>
+										<label
+											class="block font-label-md text-on-surface-variant mb-xs"
+											>System Language</label
+										>
+										<select
+											class="w-full px-md py-xs border border-outline-variant rounded-lg appearance-none bg-white">
+											<option>English (US)</option>
+											<option>Filipino</option>
+											<option>Spanish</option>
+										</select>
+									</div>
+									<div>
+										<label
+											class="block font-label-md text-on-surface-variant mb-xs"
+											>Date Format</label
+										>
+										<select
+											class="w-full px-md py-xs border border-outline-variant rounded-lg appearance-none bg-white">
+											<option>MM/DD/YYYY</option>
+											<option>DD/MM/YYYY</option>
+											<option>YYYY-MM-DD</option>
+										</select>
+									</div>
+								</div>
+							</section>
+						</div>
+						<!-- Security & API Keys -->
+						<section
+							class="bg-white rounded-xl card-shadow border border-outline-variant"
+							id="security">
+							<div
+								class="px-lg py-md border-b border-surface-variant flex items-center justify-between">
+								<div class="flex items-center gap-sm">
+									<h3 class="font-h3 text-h3 text-primary">
+										Security &amp; API Keys
+									</h3>
+									<span
+										class="bg-primary/10 text-primary text-[10px] px-sm py-0.5 rounded-full font-bold uppercase tracking-widest"
+										>Enterprise Only</span
+									>
+								</div>
+								<button
+									class="flex items-center gap-xs text-primary font-bold text-sm hover:underline">
+									<span
+										class="material-symbols-outlined text-sm"
+										data-icon="add"
+										>add</span
+									>
+									Generate New Key
+								</button>
+							</div>
+							<div class="p-lg">
+								<div
+									class="bg-surface-container-low border border-outline-variant rounded-lg overflow-hidden">
+									<table class="w-full text-left border-collapse">
+										<thead>
+											<tr class="bg-surface-container-high">
+												<th
+													class="px-md py-sm font-label-md text-on-surface-variant uppercase tracking-wider">
+													Key Label
+												</th>
+												<th
+													class="px-md py-sm font-label-md text-on-surface-variant uppercase tracking-wider">
+													Key
+												</th>
+												<th
+													class="px-md py-sm font-label-md text-on-surface-variant uppercase tracking-wider">
+													Created
+												</th>
+												<th
+													class="px-md py-sm font-label-md text-on-surface-variant uppercase tracking-wider">
+													Actions
+												</th>
+											</tr>
+										</thead>
+										<tbody class="text-sm">
+											<tr class="border-b border-surface-variant/50">
+												<td class="px-md py-md font-bold">
+													Production_Web_Main
+												</td>
+												<td class="px-md py-md">
+													<code
+														class="font-code text-primary-fixed-dim bg-primary/90 px-sm py-xs rounded"
+														>ps_live_••••••••••••x92f</code
+													>
+												</td>
+												<td class="px-md py-md text-on-surface-variant">
+													Oct 12, 2023
+												</td>
+												<td class="px-md py-md flex gap-md">
+													<button
+														class="text-on-surface-variant hover:text-primary transition-colors">
+														<span
+															class="material-symbols-outlined"
+															data-icon="visibility"
+															>visibility</span
+														>
+													</button>
+													<button
+														class="text-on-surface-variant hover:text-error transition-colors">
+														<span
+															class="material-symbols-outlined"
+															data-icon="delete"
+															>delete</span
+														>
+													</button>
+												</td>
+											</tr>
+											<tr>
+												<td class="px-md py-md font-bold">
+													Staging_Mobile_App
+												</td>
+												<td class="px-md py-md">
+													<code
+														class="font-code text-primary-fixed-dim bg-primary/90 px-sm py-xs rounded"
+														>ps_test_••••••••••••a41b</code
+													>
+												</td>
+												<td class="px-md py-md text-on-surface-variant">
+													Jan 05, 2024
+												</td>
+												<td class="px-md py-md flex gap-md">
+													<button
+														class="text-on-surface-variant hover:text-primary transition-colors">
+														<span
+															class="material-symbols-outlined"
+															data-icon="visibility"
+															>visibility</span
+														>
+													</button>
+													<button
+														class="text-on-surface-variant hover:text-error transition-colors">
+														<span
+															class="material-symbols-outlined"
+															data-icon="delete"
+															>delete</span
+														>
+													</button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div
+									class="mt-lg p-md bg-error-container/20 border border-error/20 rounded-xl flex items-start gap-md">
+									<span
+										class="material-symbols-outlined text-error"
+										data-icon="warning"
+										>warning</span
+									>
+									<div>
+										<p class="text-error font-bold text-sm">
+											Security Alert: Two-Factor Authentication
+										</p>
+										<p class="text-on-error-container text-xs mt-xs">
+											Your account is currently not protected by 2FA. We
+											strongly recommend enabling it to protect sensitive
+											organizational data and API keys.
+										</p>
+										<button
+											class="mt-sm text-error font-bold text-xs underline">
+											Enable 2FA Now
+										</button>
+									</div>
+								</div>
+							</div>
+						</section>
+					</div>
+				</div>
+				<!-- Footer Area -->
+				<footer
+					class="mt-xl py-lg border-t border-outline-variant flex justify-between items-center text-on-surface-variant">
+					<div class="flex items-center gap-md">
+						<span class="font-label-md">PSALM PORTAL v2.4.1</span>
+						<span class="h-4 w-px bg-outline-variant"></span>
+						<a class="text-xs hover:text-primary transition-all" href="#"
+							>Privacy Policy</a
+						>
+						<a class="text-xs hover:text-primary transition-all" href="#"
+							>Terms of Service</a
+						>
+					</div>
+					<div class="flex gap-md">
+						<button
+							class="text-xs flex items-center gap-xs text-on-surface-variant hover:text-primary transition-colors">
+							<span
+								class="material-symbols-outlined text-sm"
+								data-icon="history"
+								>history</span
+							>
+							View Audit Log
+						</button>
+						<button
+							class="text-xs flex items-center gap-xs text-on-surface-variant hover:text-primary transition-colors">
+							<span
+								class="material-symbols-outlined text-sm"
+								data-icon="download"
+								>download</span
+							>
+							Export Config
+						</button>
+					</div>
+				</footer>
+			</div>
+		</main>
+	</body>
+</html>

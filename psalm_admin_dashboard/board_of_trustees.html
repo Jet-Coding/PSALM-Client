@@ -1,0 +1,846 @@
+<!doctype html>
+
+<html class="light" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+		<title>PSALM Admin - Board of Trustees</title>
+		<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono&amp;display=swap"
+			rel="stylesheet" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+			rel="stylesheet" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+			rel="stylesheet" />
+		<script id="tailwind-config">
+			tailwind.config = {
+				darkMode: "class",
+				theme: {
+					extend: {
+						colors: {
+							"surface-container": "#ecefea",
+							surface: "#f8faf5",
+							"on-surface-variant": "#404942",
+							"surface-tint": "#296a4a",
+							secondary: "#1b6d24",
+							"surface-variant": "#e1e3de",
+							"on-secondary-fixed": "#002204",
+							"inverse-on-surface": "#eff1ed",
+							primary: "#00341f",
+							"on-secondary-container": "#217128",
+							"surface-container-highest": "#e1e3de",
+							"primary-container": "#004d30",
+							"on-error-container": "#93000a",
+							outline: "#707972",
+							"on-error": "#ffffff",
+							"tertiary-container": "#264939",
+							"surface-bright": "#f8faf5",
+							"tertiary-fixed": "#c4ecd5",
+							"on-primary-fixed-variant": "#085134",
+							"error-container": "#ffdad6",
+							"on-tertiary": "#ffffff",
+							"on-tertiary-fixed": "#002114",
+							"on-tertiary-fixed-variant": "#2a4e3d",
+							"inverse-primary": "#93d5ae",
+							"on-surface": "#191c1a",
+							"tertiary-fixed-dim": "#a8cfba",
+							"inverse-surface": "#2e312e",
+							"surface-container-lowest": "#ffffff",
+							"outline-variant": "#bfc9c0",
+							tertiary: "#0d3224",
+							"on-primary-container": "#7cbd98",
+							"on-tertiary-container": "#91b7a3",
+							"primary-fixed": "#aef1c9",
+							"secondary-fixed-dim": "#88d982",
+							"on-secondary": "#ffffff",
+							"on-background": "#191c1a",
+							background: "#f8faf5",
+							"primary-fixed-dim": "#93d5ae",
+							"secondary-fixed": "#a3f69c",
+							"surface-container-high": "#e6e9e4",
+							error: "#ba1a1a",
+							"surface-dim": "#d8dbd6",
+							"on-primary-fixed": "#002112",
+							"on-primary": "#ffffff",
+							"surface-container-low": "#f2f4ef",
+							"on-secondary-fixed-variant": "#005312",
+							"secondary-container": "#a0f399",
+						},
+						borderRadius: {
+							DEFAULT: "0.125rem",
+							lg: "0.25rem",
+							xl: "0.5rem",
+							full: "0.75rem",
+						},
+						spacing: {
+							xl: "32px",
+							gutter: "16px",
+							md: "16px",
+							xs: "4px",
+							sm: "12px",
+							lg: "24px",
+							base: "8px",
+							"sidebar-width": "260px",
+							"container-padding": "24px",
+						},
+						fontFamily: {
+							h1: ["Inter"],
+							"label-md": ["Inter"],
+							h2: ["Inter"],
+							"body-md": ["Inter"],
+							h3: ["Inter"],
+							code: ["JetBrains Mono"],
+							"body-sm": ["Inter"],
+						},
+						fontSize: {
+							h1: [
+								"24px",
+								{
+									lineHeight: "32px",
+									letterSpacing: "-0.02em",
+									fontWeight: "600",
+								},
+							],
+							"label-md": [
+								"12px",
+								{
+									lineHeight: "16px",
+									letterSpacing: "0.05em",
+									fontWeight: "500",
+								},
+							],
+							h2: [
+								"20px",
+								{
+									lineHeight: "28px",
+									letterSpacing: "-0.01em",
+									fontWeight: "600",
+								},
+							],
+							"body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+							h3: ["16px", { lineHeight: "24px", fontWeight: "600" }],
+							code: ["13px", { lineHeight: "20px", fontWeight: "400" }],
+							"body-sm": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+						},
+					},
+				},
+			};
+		</script>
+		<style>
+			.material-symbols-outlined {
+				font-variation-settings:
+					"FILL" 0,
+					"wght" 400,
+					"GRAD" 0,
+					"opsz" 24;
+			}
+			body {
+				background-color: #f4f7f6;
+			}
+			.card-shadow {
+				box-shadow:
+					0px 1px 3px rgba(0, 0, 0, 0.05),
+					0px 4px 6px rgba(0, 0, 0, 0.02);
+			}
+			.sidebar-hover:hover {
+				background-color: rgba(255, 255, 255, 0.1);
+			}
+		</style>
+	</head>
+	<body class="font-body-md text-on-surface">
+		<!-- BEGIN: Sidebar -->
+		<aside
+			class="fixed inset-y-0 left-0 z-50 w-64 bg-[#064e3b] text-white transition-all duration-300 transform lg:translate-x-0 -translate-x-full lg:inset-0"
+			data-purpose="navigation-sidebar"
+			id="sidebar">
+			<div class="flex items-center justify-between h-16 px-6 bg-[#064e3b]">
+				<span class="text-2xl font-bold tracking-wider">PSALM</span
+				><button
+					class="hidden lg:flex p-1 hover:bg-green-800 rounded transition-colors ml-auto"
+					id="sidebar-collapse-toggle">
+					<span class="material-symbols-outlined">chevron_left</span>
+				</button>
+			</div>
+			<nav class="mt-4 px-2 space-y-1 overflow-y-auto max-h-[calc(100vh-80px)]">
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="admin_dashboard.html">
+					<svg
+						class="w-5 h-5 mr-3"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+					</svg>
+					Dashboard
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="departments.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+					</svg>
+					Departments
+				</a>
+				<a
+					class="flex items-center px-4 py-3 bg-white text-emerald-900 rounded-sm font-semibold transition-colors duration-200"
+					href="board_of_trustees.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+					</svg>
+					Board of Trustees
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="campus_missionaries.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+					</svg>
+					Campus Missionaries
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="master_list.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+					</svg>
+					Master List
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="statistics.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0h6m2 0h2a2 2 0 002-2v-7a2 2 0 00-2-2h-2a2 2 0 00-2 2v7a2 2 0 002 2z"></path>
+					</svg>
+					Statistics
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="training.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+					</svg>
+					Training
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="partnership_development.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+					</svg>
+					Partnership Development
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="team.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+					</svg>
+					Team Analytics
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="user_management.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+					</svg>
+					User &amp; Role Management
+				</a>
+			</nav>
+			<div class="mt-auto px-4 space-y-4">
+				<div class="pt-4 border-t border-white/10 space-y-1">
+					<a
+						class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+						href="settings.html">
+						<svg
+							class="w-5 h-5 mr-3 opacity-80"
+							fill="none"
+							stroke="currentColor"
+							viewbox="0 0 24 24">
+							<path
+								d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+							<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+						</svg>
+						Settings
+					</a>
+					<a
+						class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+						href="logout.html">
+						<svg
+							class="w-5 h-5 mr-3 opacity-80"
+							fill="none"
+							stroke="currentColor"
+							viewbox="0 0 24 24">
+							<path
+								d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+						</svg>
+						Logout
+					</a>
+				</div>
+			</div>
+		</aside>
+		<!-- END: Sidebar -->
+		<!-- Main Content Area -->
+		<main class="ml-sidebar-width min-h-screen">
+			<!-- TopNavBar -->
+			<header
+				class="flex justify-between items-center px-lg py-md bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline sticky top-0 z-40">
+				<div class="flex items-center gap-xl w-1/2">
+					<div class="relative w-full max-w-md">
+						<span
+							class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-outline"
+							data-icon="search"
+							>search</span
+						>
+						<input
+							class="w-full pl-xl pr-md py-base bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary/20 text-body-md"
+							placeholder="Search members, roles, or terms..."
+							type="text" />
+					</div>
+				</div>
+				<div class="flex items-center gap-lg">
+					<button
+						class="p-base hover:bg-surface-container-high rounded-full transition-colors relative">
+						<span
+							class="material-symbols-outlined text-on-surface-variant"
+							data-icon="notifications"
+							>notifications</span
+						>
+						<span
+							class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+					</button>
+					<button
+						class="p-base hover:bg-surface-container-high rounded-full transition-colors">
+						<span
+							class="material-symbols-outlined text-on-surface-variant"
+							data-icon="help_outline"
+							>help_outline</span
+						>
+					</button>
+					<button
+						class="p-base hover:bg-surface-container-high rounded-full transition-colors">
+						<span
+							class="material-symbols-outlined text-on-surface-variant"
+							data-icon="settings"
+							>settings</span
+						>
+					</button>
+					<div class="h-8 w-px bg-outline-variant mx-xs"></div>
+					<img
+						alt="Administrator Profile"
+						class="w-10 h-10 rounded-full border-2 border-white"
+						data-alt="A professional headshot of a middle-aged male administrator with a confident expression, wearing a tailored navy suit and glasses. The background is a blurred high-end corporate office with soft natural lighting coming from large windows. The overall aesthetic is professional, clean, and light-mode compatible."
+						src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUuZcjPNIZiqa1p9fqbBoCOdPjuJM2LBGHEliJHdwcNh3pCk8vg6iC5wv4B__XBiQfvGMdPZjm_sYId-FVulFkSUbM1lRd68A_CWICZcnr2a8xfht5Dg8ByE3Iu8_jUtAjI509cOrkSN0_KPDYtUcgbaINvH_TKI1J0Edwf3cYjgvzL29569L2kGLNpVTB1dPCKPhl4Ce0YAytGgX35GMBRnhsrHXoku_Oz3xs4WmbNccsvkntSrDiuMVzMn781olpIQbvEQDCjaUp" />
+				</div>
+			</header>
+			<!-- Page Canvas -->
+			<div class="p-lg">
+				<div
+					class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-xl">
+					<div>
+						<h2 class="font-h1 text-h1 text-primary">Board of Trustees</h2>
+						<p class="text-on-surface-variant mt-xs">
+							Manage organizational leadership, board roles, and historical
+							terms.
+						</p>
+					</div>
+					<div class="flex items-center gap-md">
+						<div class="flex bg-surface-container rounded-xl p-xs">
+							<button
+								class="px-lg py-base bg-white shadow-sm rounded-lg text-primary font-bold text-body-sm flex items-center gap-xs">
+								<span
+									class="material-symbols-outlined text-[18px]"
+									data-icon="grid_view"
+									>grid_view</span
+								>
+								Grid
+							</button>
+							<button
+								class="px-lg py-base text-on-surface-variant font-medium text-body-sm flex items-center gap-xs hover:bg-white/50 transition-all rounded-lg">
+								<span
+									class="material-symbols-outlined text-[18px]"
+									data-icon="format_list_bulleted"
+									>format_list_bulleted</span
+								>
+								List
+							</button>
+						</div>
+						<button
+							class="bg-primary-container text-white px-lg py-md rounded-xl font-bold flex items-center gap-sm shadow-lg hover:bg-primary transition-all scale-100 active:scale-95">
+							<span class="material-symbols-outlined" data-icon="add">add</span>
+							New Trustee
+						</button>
+					</div>
+				</div>
+				<!-- Filters Bar -->
+				<div
+					class="bg-white rounded-xl p-md mb-lg card-shadow flex flex-wrap items-center gap-lg border border-outline-variant/30">
+					<div class="flex items-center gap-md">
+						<span
+							class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider"
+							>Status:</span
+						>
+						<div class="flex gap-xs">
+							<button
+								class="bg-primary text-white px-md py-xs rounded-full text-body-sm font-semibold">
+								All Members
+							</button>
+							<button
+								class="bg-surface-container text-on-surface-variant px-md py-xs rounded-full text-body-sm font-semibold hover:bg-surface-container-high">
+								Active
+							</button>
+							<button
+								class="bg-surface-container text-on-surface-variant px-md py-xs rounded-full text-body-sm font-semibold hover:bg-surface-container-high">
+								Retired
+							</button>
+						</div>
+					</div>
+					<div class="h-6 w-px bg-outline-variant"></div>
+					<div class="flex items-center gap-md">
+						<span
+							class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider"
+							>Department:</span
+						>
+						<select
+							class="bg-surface-container-low border-none rounded-lg text-body-sm py-xs pl-md pr-xl focus:ring-primary/20">
+							<option>All Departments</option>
+							<option>Finance</option>
+							<option>Operational Growth</option>
+							<option>Spiritual Oversight</option>
+						</select>
+					</div>
+					<button
+						class="ml-auto text-primary font-bold text-body-sm flex items-center gap-xs">
+						<span
+							class="material-symbols-outlined text-[18px]"
+							data-icon="filter_list"
+							>filter_list</span
+						>
+						Advanced Filters
+					</button>
+				</div>
+				<!-- Board Grid -->
+				<div
+					class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-lg">
+					<!-- Trustee Card 1 -->
+					<div
+						class="bg-white rounded-xl p-lg card-shadow border border-outline-variant/30 group hover:border-primary/30 transition-all">
+						<div class="flex justify-between items-start mb-md">
+							<div class="relative">
+								<img
+									alt="Dr. Alistair Vance"
+									class="w-20 h-20 rounded-2xl object-cover"
+									data-alt="A professional portrait of an elderly man with silver hair and a kind expression, wearing a dark green sweater over a white collared shirt. He is seated in a sunlit library filled with books. The lighting is warm and academic, reflecting a tone of wisdom and stability within a corporate forest-green color palette."
+									src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMCq6bO-9qDXL2TbdBKwn_-7C5zIhqyxehve1S5hNnAqEd7s2imM9w8qUdNeR7QyqSzlalBzSNUeU1wrqDMyTx1p_vpbOouBWsNtiFj9PhOVGKBE8J_3J-5JI6VptjTAEmMRABC-Ejl6oj_IdFzP4ndVm_rMBmalN7tBxvTpjNJmFjW1SOj1cQ-pQKdmj3kB_FG0S_woRAe7dWQuH5hQIFZ7u9V5QM-0DiFyxdJRO7A8FibmDJIfvh70WoHjNgk0jqqR317XrpUsKj" />
+								<span
+									class="absolute -bottom-1 -right-1 w-5 h-5 bg-secondary border-2 border-white rounded-full"></span>
+							</div>
+							<button class="text-outline hover:text-primary transition-colors">
+								<span class="material-symbols-outlined" data-icon="more_vert"
+									>more_vert</span
+								>
+							</button>
+						</div>
+						<div>
+							<h3 class="font-h3 text-h3 text-on-surface">
+								Dr. Alistair Vance
+							</h3>
+							<p class="text-secondary font-bold text-body-sm mb-base">
+								Chairman of the Board
+							</p>
+							<div
+								class="flex flex-col gap-xs mt-md py-md border-y border-outline-variant/20">
+								<div class="flex justify-between items-center">
+									<span class="text-body-sm text-on-surface-variant"
+										>Term Period</span
+									>
+									<span class="text-body-sm font-semibold">2022 — 2025</span>
+								</div>
+								<div class="flex justify-between items-center">
+									<span class="text-body-sm text-on-surface-variant"
+										>Committee</span
+									>
+									<span class="text-body-sm font-semibold">Executive</span>
+								</div>
+							</div>
+							<div class="mt-lg flex gap-md">
+								<button
+									class="flex-1 bg-surface-container-high text-primary font-bold py-base rounded-lg text-body-sm hover:bg-primary hover:text-white transition-all">
+									View Details
+								</button>
+								<button
+									class="w-10 h-10 flex items-center justify-center border border-outline-variant rounded-lg text-outline hover:text-primary hover:border-primary transition-all">
+									<span
+										class="material-symbols-outlined text-[20px]"
+										data-icon="mail"
+										>mail</span
+									>
+								</button>
+							</div>
+						</div>
+					</div>
+					<!-- Trustee Card 2 -->
+					<div
+						class="bg-white rounded-xl p-lg card-shadow border border-outline-variant/30 group hover:border-primary/30 transition-all">
+						<div class="flex justify-between items-start mb-md">
+							<div class="relative">
+								<img
+									alt="Sarah J. Sterling"
+									class="w-20 h-20 rounded-2xl object-cover"
+									data-alt="A professional studio portrait of a woman in her early 40s with a sharp, professional look, wearing a blazer. The background is a clean, minimalist charcoal grey. The lighting is sophisticated three-point lighting, highlighting her features with a modern, authoritative corporate aesthetic that fits a forest-themed design system."
+									src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzezRXwdMMmC07NrLpVqgL2N9s-fdyxISVn7pHkrjs9pXyX2ayOZ6gCCiHdAiUXV3cCRBvbJcAzCB0aNAD5nm1um8APKy5gXgtYfhbtAO4vtofsyV_DJQO_QDMlxKL2hOQPS-IaX5Y_NDby5F0Xz_Coy0Qr2xEfxrDPIscDtXCANFN0GbGVgJafclJ9KDNxx9yxxjpN0NA3DJhmP-fVkHzUiYxff6epdb6zTQ6sVI50aGvrOitxhBFtcstzDQaUyWQAyHv_4BTerPz" />
+								<span
+									class="absolute -bottom-1 -right-1 w-5 h-5 bg-secondary border-2 border-white rounded-full"></span>
+							</div>
+							<button class="text-outline hover:text-primary transition-colors">
+								<span class="material-symbols-outlined" data-icon="more_vert"
+									>more_vert</span
+								>
+							</button>
+						</div>
+						<div>
+							<h3 class="font-h3 text-h3 text-on-surface">Sarah J. Sterling</h3>
+							<p class="text-secondary font-bold text-body-sm mb-base">
+								Treasurer
+							</p>
+							<div
+								class="flex flex-col gap-xs mt-md py-md border-y border-outline-variant/20">
+								<div class="flex justify-between items-center">
+									<span class="text-body-sm text-on-surface-variant"
+										>Term Period</span
+									>
+									<span class="text-body-sm font-semibold">2021 — 2024</span>
+								</div>
+								<div class="flex justify-between items-center">
+									<span class="text-body-sm text-on-surface-variant"
+										>Committee</span
+									>
+									<span class="text-body-sm font-semibold"
+										>Finance &amp; Audit</span
+									>
+								</div>
+							</div>
+							<div class="mt-lg flex gap-md">
+								<button
+									class="flex-1 bg-surface-container-high text-primary font-bold py-base rounded-lg text-body-sm hover:bg-primary hover:text-white transition-all">
+									View Details
+								</button>
+								<button
+									class="w-10 h-10 flex items-center justify-center border border-outline-variant rounded-lg text-outline hover:text-primary hover:border-primary transition-all">
+									<span
+										class="material-symbols-outlined text-[20px]"
+										data-icon="mail"
+										>mail</span
+									>
+								</button>
+							</div>
+						</div>
+					</div>
+					<!-- Trustee Card 3 (Retired) -->
+					<div
+						class="bg-surface-container-low/50 rounded-xl p-lg card-shadow border border-outline-variant/30 group opacity-80 transition-all">
+						<div class="flex justify-between items-start mb-md">
+							<div class="relative">
+								<img
+									alt="Marcus Chen"
+									class="w-20 h-20 rounded-2xl object-cover grayscale"
+									data-alt="A portrait of a senior man of Asian descent with a gentle smile and grey hair. He is wearing a formal dark suit. The photo has a soft focus background and a slight nostalgic tint. The mood is respectful and honors his retired status within a modern, established organizational framework."
+									src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcXCegL-Av1TCz8fguN9D_LZowYJq7O2mVu8tE9B6vV5PiHJhSpYuauno8r4F1iPlYI3xo6mQ0msrzfK65kZEer8XZodRIRFWil1_AnbA4lak1y2Wi3JZf2Q_kB8Uza8rW9kbL0IogE6lO5_n_gacho3QeIywsasJQ3XbSDv38uA15TcXhqJblwODoVuN_knk2xSsBe4vfKg-LwhJGu8ffKInl9lRoSVrE267omf1uIR-BnTRI7MEOGiFq4yZa_EsQp5f-sFAwvCq6" />
+								<span
+									class="absolute -bottom-1 -right-1 w-5 h-5 bg-outline border-2 border-white rounded-full"></span>
+							</div>
+							<div
+								class="bg-outline-variant text-[10px] font-bold uppercase px-md py-xs rounded text-on-surface-variant">
+								Retired
+							</div>
+						</div>
+						<div>
+							<h3 class="font-h3 text-h3 text-on-surface">Marcus Chen</h3>
+							<p class="text-on-surface-variant font-bold text-body-sm mb-base">
+								Emeritus Member
+							</p>
+							<div
+								class="flex flex-col gap-xs mt-md py-md border-y border-outline-variant/20">
+								<div class="flex justify-between items-center">
+									<span class="text-body-sm text-on-surface-variant"
+										>Served</span
+									>
+									<span class="text-body-sm font-semibold">2010 — 2022</span>
+								</div>
+								<div class="flex justify-between items-center">
+									<span class="text-body-sm text-on-surface-variant"
+										>Past Role</span
+									>
+									<span class="text-body-sm font-semibold">Secretary</span>
+								</div>
+							</div>
+							<div class="mt-lg flex gap-md">
+								<button
+									class="flex-1 bg-surface-container-high text-primary font-bold py-base rounded-lg text-body-sm hover:bg-primary hover:text-white transition-all">
+									View Archive
+								</button>
+							</div>
+						</div>
+					</div>
+					<!-- Trustee Card 4 -->
+					<div
+						class="bg-white rounded-xl p-lg card-shadow border border-outline-variant/30 group hover:border-primary/30 transition-all">
+						<div class="flex justify-between items-start mb-md">
+							<div class="relative">
+								<img
+									alt="Elena Rodriguez"
+									class="w-20 h-20 rounded-2xl object-cover"
+									data-alt="A bright, professional headshot of a woman in her late 30s with a warm and approachable smile. She has dark wavy hair and is wearing a forest-green silk blouse. The background is a modern office space with soft daylight. The aesthetic is clean, professional, and integrates perfectly with a high-contrast modern UI."
+									src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHkURYV-GBXqAsnOqcWcgdiz-I2ZyoXuEnTuaWVi63JEJxSq-vZTs1QUp2cbt9TPxngocqRf-c9ZbkHSuoI6eEfBCYvkZoi3zSYfVq417e-DWY1u9Etn5AN5iRt7QxREUHb4P6H8fyR6HjuZdpU9lhs9K9asemrNfdkzbXUriWbNfwYpg2UI7-uQL0zt00WJ4_ejiHbeNjGYzSBYlXrIwlVLvJxgZ0Yg-I7vPi4v3MYP_XQSnp40bKAMk67aTX-AlTU32AGVp7UF1T" />
+								<span
+									class="absolute -bottom-1 -right-1 w-5 h-5 bg-secondary border-2 border-white rounded-full"></span>
+							</div>
+							<button class="text-outline hover:text-primary transition-colors">
+								<span class="material-symbols-outlined" data-icon="more_vert"
+									>more_vert</span
+								>
+							</button>
+						</div>
+						<div>
+							<h3 class="font-h3 text-h3 text-on-surface">Elena Rodriguez</h3>
+							<p class="text-secondary font-bold text-body-sm mb-base">
+								Lead Secretary
+							</p>
+							<div
+								class="flex flex-col gap-xs mt-md py-md border-y border-outline-variant/20">
+								<div class="flex justify-between items-center">
+									<span class="text-body-sm text-on-surface-variant"
+										>Term Period</span
+									>
+									<span class="text-body-sm font-semibold">2023 — 2026</span>
+								</div>
+								<div class="flex justify-between items-center">
+									<span class="text-body-sm text-on-surface-variant"
+										>Committee</span
+									>
+									<span class="text-body-sm font-semibold">Governance</span>
+								</div>
+							</div>
+							<div class="mt-lg flex gap-md">
+								<button
+									class="flex-1 bg-surface-container-high text-primary font-bold py-base rounded-lg text-body-sm hover:bg-primary hover:text-white transition-all">
+									View Details
+								</button>
+								<button
+									class="w-10 h-10 flex items-center justify-center border border-outline-variant rounded-lg text-outline hover:text-primary hover:border-primary transition-all">
+									<span
+										class="material-symbols-outlined text-[20px]"
+										data-icon="mail"
+										>mail</span
+									>
+								</button>
+							</div>
+						</div>
+					</div>
+					<!-- Trustee Card 5 -->
+					<div
+						class="bg-white rounded-xl p-lg card-shadow border border-outline-variant/30 group hover:border-primary/30 transition-all">
+						<div class="flex justify-between items-start mb-md">
+							<div class="relative">
+								<img
+									alt="Julian Thorne"
+									class="w-20 h-20 rounded-2xl object-cover"
+									data-alt="A portrait of a man in his late 40s with a modern, analytical look. He is wearing a grey turtleneck and a dark blazer. He stands against a dark forest-green wall with minimalist geometric patterns. The lighting is focused and dramatic, suggesting precision and growth in a high-performance administrative environment."
+									src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi8GRDjNQf8IPi8Ryop5VgGU7WIgkQ3NZSbYxQczQXKNnXtNgRFqAqJu_MAMeSb7AvF52QO7ysV685bRXV_Mk6sdHt_STTM0Z1BQFKXv8c6U2dWSPHh2QKQ-WY9_QgVAL3u98n-f48vBZ-S-66LOf2Dy4YHBHo3HKrkfgoKVMuuFi0IlaDQOzIOgbHskp2eHQy0xtgpY9YKGPa8nokcF-y8kzacWFOe-CAeBIsmZNrXYQeYX6k0Wu76IwKfNd9cyRJjZB1T0aH23E2" />
+								<span
+									class="absolute -bottom-1 -right-1 w-5 h-5 bg-secondary border-2 border-white rounded-full"></span>
+							</div>
+							<button class="text-outline hover:text-primary transition-colors">
+								<span class="material-symbols-outlined" data-icon="more_vert"
+									>more_vert</span
+								>
+							</button>
+						</div>
+						<div>
+							<h3 class="font-h3 text-h3 text-on-surface">Julian Thorne</h3>
+							<p class="text-secondary font-bold text-body-sm mb-base">
+								Missionary Liaison
+							</p>
+							<div
+								class="flex flex-col gap-xs mt-md py-md border-y border-outline-variant/20">
+								<div class="flex justify-between items-center">
+									<span class="text-body-sm text-on-surface-variant"
+										>Term Period</span
+									>
+									<span class="text-body-sm font-semibold">2022 — 2025</span>
+								</div>
+								<div class="flex justify-between items-center">
+									<span class="text-body-sm text-on-surface-variant"
+										>Committee</span
+									>
+									<span class="text-body-sm font-semibold"
+										>Strategy &amp; Growth</span
+									>
+								</div>
+							</div>
+							<div class="mt-lg flex gap-md">
+								<button
+									class="flex-1 bg-surface-container-high text-primary font-bold py-base rounded-lg text-body-sm hover:bg-primary hover:text-white transition-all">
+									View Details
+								</button>
+								<button
+									class="w-10 h-10 flex items-center justify-center border border-outline-variant rounded-lg text-outline hover:text-primary hover:border-primary transition-all">
+									<span
+										class="material-symbols-outlined text-[20px]"
+										data-icon="mail"
+										>mail</span
+									>
+								</button>
+							</div>
+						</div>
+					</div>
+					<!-- Trustee Card 6 -->
+					<div
+						class="bg-white rounded-xl p-lg card-shadow border border-outline-variant/30 group hover:border-primary/30 transition-all">
+						<div class="flex justify-between items-start mb-md">
+							<div class="relative">
+								<img
+									alt="Dr. Fiona Wu"
+									class="w-20 h-20 rounded-2xl object-cover"
+									data-alt="A portrait of a highly professional woman with an academic and medical air, wearing a crisp white shirt and a green silk necktie. The background is a clean, bright medical or academic office. The lighting is soft and flattering, emphasizing a bright, trustworthy, and modern light-mode aesthetic suitable for a high-end leadership portal."
+									src="https://lh3.googleusercontent.com/aida-public/AB6AXuBakwg_s7UL2LkbchgNt8UfdboZunvuwSdYoJBovlEmWwsAqFBpcbXRyG2cf4B1BH9k99ngJJfYDbpCoHb7b-I_zb1B4n0sYnMgVAjQIDu__G9UMRitQ0CyRbWl6LXPd54S96DCQ7GXkkWNkYnQKA6RpTg7SqfyaG5mbNXX_49P2UlgNXO0YC1WJYwKvdlQ7D4YDX3H1O3yBhtAWffMISMFTy_Gl72aiItDulCgbZpnaHfIfLeuqGdqP6lGz_bwGPWWPEqd69lSA_Fe" />
+								<span
+									class="absolute -bottom-1 -right-1 w-5 h-5 bg-secondary border-2 border-white rounded-full"></span>
+							</div>
+							<button class="text-outline hover:text-primary transition-colors">
+								<span class="material-symbols-outlined" data-icon="more_vert"
+									>more_vert</span
+								>
+							</button>
+						</div>
+						<div>
+							<h3 class="font-h3 text-h3 text-on-surface">Dr. Fiona Wu</h3>
+							<p class="text-secondary font-bold text-body-sm mb-base">
+								Ethics Oversight
+							</p>
+							<div
+								class="flex flex-col gap-xs mt-md py-md border-y border-outline-variant/20">
+								<div class="flex justify-between items-center">
+									<span class="text-body-sm text-on-surface-variant"
+										>Term Period</span
+									>
+									<span class="text-body-sm font-semibold">2024 — 2027</span>
+								</div>
+								<div class="flex justify-between items-center">
+									<span class="text-body-sm text-on-surface-variant"
+										>Committee</span
+									>
+									<span class="text-body-sm font-semibold">Compliance</span>
+								</div>
+							</div>
+							<div class="mt-lg flex gap-md">
+								<button
+									class="flex-1 bg-surface-container-high text-primary font-bold py-base rounded-lg text-body-sm hover:bg-primary hover:text-white transition-all">
+									View Details
+								</button>
+								<button
+									class="w-10 h-10 flex items-center justify-center border border-outline-variant rounded-lg text-outline hover:text-primary hover:border-primary transition-all">
+									<span
+										class="material-symbols-outlined text-[20px]"
+										data-icon="mail"
+										>mail</span
+									>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Pagination -->
+				<div
+					class="mt-xl flex items-center justify-between bg-white px-lg py-md rounded-xl card-shadow border border-outline-variant/30">
+					<p class="text-body-sm text-on-surface-variant">
+						Showing <span class="font-bold text-on-surface">6</span> of
+						<span class="font-bold text-on-surface">24</span> Trustees
+					</p>
+					<div class="flex gap-xs">
+						<button
+							class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container-high disabled:opacity-30"
+							disabled="">
+							<span class="material-symbols-outlined" data-icon="chevron_left"
+								>chevron_left</span
+							>
+						</button>
+						<button
+							class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold">
+							1
+						</button>
+						<button
+							class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-surface-container-high text-on-surface-variant font-medium">
+							2
+						</button>
+						<button
+							class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-surface-container-high text-on-surface-variant font-medium">
+							3
+						</button>
+						<button
+							class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container-high">
+							<span class="material-symbols-outlined" data-icon="chevron_right"
+								>chevron_right</span
+							>
+						</button>
+					</div>
+				</div>
+			</div>
+			<!-- FAB for specific dashboard action -->
+			<button
+				class="fixed bottom-lg right-lg w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-50">
+				<span class="material-symbols-outlined text-[28px]" data-icon="add"
+					>add</span
+				>
+			</button>
+		</main>
+	</body>
+</html>

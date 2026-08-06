@@ -1,0 +1,914 @@
+<!doctype html>
+
+<html class="light" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+		<title>PSALM Admin - Partnership Development</title>
+		<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400&amp;display=swap"
+			rel="stylesheet" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+			rel="stylesheet" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+			rel="stylesheet" />
+		<script id="tailwind-config">
+			tailwind.config = {
+				darkMode: "class",
+				theme: {
+					extend: {
+						colors: {
+							"inverse-surface": "#2e312e",
+							tertiary: "#0d3224",
+							"primary-container": "#004d30",
+							"surface-container-low": "#f2f4ef",
+							"on-secondary": "#ffffff",
+							"outline-variant": "#bfc9c0",
+							"on-primary-fixed-variant": "#085134",
+							"on-tertiary-fixed-variant": "#2a4e3d",
+							primary: "#00341f",
+							"on-background": "#191c1a",
+							"inverse-primary": "#93d5ae",
+							"surface-container-high": "#e6e9e4",
+							"on-error-container": "#93000a",
+							"tertiary-fixed-dim": "#a8cfba",
+							"on-tertiary": "#ffffff",
+							"inverse-on-surface": "#eff1ed",
+							"secondary-fixed": "#a3f69c",
+							"tertiary-container": "#264939",
+							secondary: "#1b6d24",
+							"primary-fixed": "#aef1c9",
+							"tertiary-fixed": "#c4ecd5",
+							"on-primary-container": "#7cbd98",
+							"surface-container-lowest": "#ffffff",
+							"on-surface-variant": "#404942",
+							"surface-variant": "#e1e3de",
+							"surface-container": "#ecefea",
+							"on-tertiary-fixed": "#002114",
+							"on-tertiary-container": "#91b7a3",
+							"on-secondary-container": "#217128",
+							"on-primary-fixed": "#002112",
+							background: "#f8faf5",
+							"surface-bright": "#f8faf5",
+							"on-primary": "#ffffff",
+							outline: "#707972",
+							"surface-dim": "#d8dbd6",
+							"on-error": "#ffffff",
+							"error-container": "#ffdad6",
+							"surface-container-highest": "#e1e3de",
+							"on-secondary-fixed": "#002204",
+							"surface-tint": "#296a4a",
+							"secondary-fixed-dim": "#88d982",
+							"secondary-container": "#a0f399",
+							"on-secondary-fixed-variant": "#005312",
+							"primary-fixed-dim": "#93d5ae",
+							"on-surface": "#191c1a",
+							error: "#ba1a1a",
+							surface: "#f8faf5",
+						},
+						borderRadius: {
+							DEFAULT: "0.125rem",
+							lg: "0.25rem",
+							xl: "0.5rem",
+							full: "0.75rem",
+						},
+						spacing: {
+							sm: "12px",
+							md: "16px",
+							"container-padding": "24px",
+							xs: "4px",
+							gutter: "16px",
+							"sidebar-width": "260px",
+							lg: "24px",
+							base: "8px",
+							xl: "32px",
+						},
+						fontFamily: {
+							h2: ["Inter"],
+							"body-sm": ["Inter"],
+							h1: ["Inter"],
+							code: ["JetBrains Mono"],
+							"body-md": ["Inter"],
+							"label-md": ["Inter"],
+							h3: ["Inter"],
+						},
+						fontSize: {
+							h2: [
+								"20px",
+								{
+									lineHeight: "28px",
+									letterSpacing: "-0.01em",
+									fontWeight: "600",
+								},
+							],
+							"body-sm": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+							h1: [
+								"24px",
+								{
+									lineHeight: "32px",
+									letterSpacing: "-0.02em",
+									fontWeight: "600",
+								},
+							],
+							code: ["13px", { lineHeight: "20px", fontWeight: "400" }],
+							"body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+							"label-md": [
+								"12px",
+								{
+									lineHeight: "16px",
+									letterSpacing: "0.05em",
+									fontWeight: "500",
+								},
+							],
+							h3: ["16px", { lineHeight: "24px", fontWeight: "600" }],
+						},
+					},
+				},
+			};
+		</script>
+		<style>
+			.material-symbols-outlined {
+				font-variation-settings:
+					"FILL" 0,
+					"wght" 400,
+					"GRAD" 0,
+					"opsz" 24;
+			}
+			.sidebar-shadow {
+				box-shadow:
+					0px 1px 3px rgba(0, 0, 0, 0.05),
+					0px 4px 6px rgba(0, 0, 0, 0.02);
+			}
+			::-webkit-scrollbar {
+				width: 6px;
+			}
+			::-webkit-scrollbar-track {
+				background: transparent;
+			}
+			::-webkit-scrollbar-thumb {
+				background: #004d3044;
+				border-radius: 10px;
+			}
+		</style>
+	</head>
+	<body class="bg-background font-body-md text-on-background min-h-screen">
+		<!-- BEGIN: Sidebar -->
+		<aside
+			class="fixed inset-y-0 left-0 z-50 w-64 bg-[#064e3b] text-white transition-all duration-300 transform lg:translate-x-0 -translate-x-full lg:inset-0"
+			data-purpose="navigation-sidebar"
+			id="sidebar">
+			<div class="flex items-center justify-between h-16 px-6 bg-[#064e3b]">
+				<span class="text-2xl font-bold tracking-wider">PSALM</span
+				><button
+					class="hidden lg:flex p-1 hover:bg-green-800 rounded transition-colors ml-auto"
+					id="sidebar-collapse-toggle">
+					<span class="material-symbols-outlined">chevron_left</span>
+				</button>
+			</div>
+			<nav class="mt-4 px-2 space-y-1 overflow-y-auto max-h-[calc(100vh-80px)]">
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="admin_dashboard.html">
+					<svg
+						class="w-5 h-5 mr-3"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+					</svg>
+					Dashboard
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="departments.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+					</svg>
+					Departments
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="board_of_trustees.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+					</svg>
+					Board of Trustees
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="campus_missionaries.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+					</svg>
+					Campus Missionaries
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="master_list.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+					</svg>
+					Master List
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="statistics.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0h6m2 0h2a2 2 0 002-2v-7a2 2 0 00-2-2h-2a2 2 0 00-2 2v7a2 2 0 002 2z"></path>
+					</svg>
+					Statistics
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="training.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+					</svg>
+					Training
+				</a>
+				<a
+					class="flex items-center px-4 py-3 bg-white text-emerald-900 rounded-sm font-semibold transition-colors duration-200"
+					href="partnership_development.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+					</svg>
+					Partnership Development
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="team.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+					</svg>
+					Team Analytics
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="user_management.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+					</svg>
+					User &amp; Role Management
+				</a>
+			</nav>
+			<div class="mt-auto px-4 space-y-4">
+				<div class="pt-4 border-t border-white/10 space-y-1">
+					<a
+						class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+						href="settings.html">
+						<svg
+							class="w-5 h-5 mr-3 opacity-80"
+							fill="none"
+							stroke="currentColor"
+							viewbox="0 0 24 24">
+							<path
+								d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+							<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+						</svg>
+						Settings
+					</a>
+					<a
+						class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+						href="logout.html">
+						<svg
+							class="w-5 h-5 mr-3 opacity-80"
+							fill="none"
+							stroke="currentColor"
+							viewbox="0 0 24 24">
+							<path
+								d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+						</svg>
+						Logout
+					</a>
+				</div>
+			</div>
+		</aside>
+		<!-- Main Content Shell -->
+		<main class="ml-sidebar-width flex flex-col min-h-screen">
+			<!-- TopNavBar Component -->
+			<header
+				class="flex justify-between items-center px-lg py-md w-full bg-surface dark:bg-inverse-surface border-b border-outline-variant sticky top-0 z-40">
+				<div class="flex items-center gap-xl flex-1">
+					<h2
+						class="font-h2 text-h2 font-black text-primary dark:text-primary-fixed">
+						Partnership Development
+					</h2>
+					<div class="relative w-full max-w-md group">
+						<span
+							class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-outline"
+							data-icon="search"
+							>search</span
+						>
+						<input
+							class="w-full bg-surface-container-low border-none rounded-full pl-xl pr-md py-xs focus:ring-2 focus:ring-primary/20 font-body-md transition-all"
+							placeholder="Search partners, campaigns, or metrics..."
+							type="text" />
+					</div>
+				</div>
+				<div class="flex items-center gap-md">
+					<button
+						class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-high transition-colors text-on-surface-variant">
+						<span class="material-symbols-outlined" data-icon="notifications"
+							>notifications</span
+						>
+					</button>
+					<button
+						class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-high transition-colors text-on-surface-variant">
+						<span class="material-symbols-outlined" data-icon="settings"
+							>settings</span
+						>
+					</button>
+					<div class="h-8 w-px bg-outline-variant mx-xs"></div>
+					<div class="flex items-center gap-md pl-xs">
+						<div class="text-right hidden sm:block">
+							<p class="text-body-md font-bold text-on-surface">
+								Director Admin
+							</p>
+							<p class="text-label-md text-on-surface-variant">
+								Development Office
+							</p>
+						</div>
+						<img
+							alt="Administrator Profile"
+							class="w-10 h-10 rounded-full border border-outline-variant"
+							data-alt="A professional corporate headshot of a middle-aged male administrator with a confident expression. The lighting is soft and natural, coming from the side to create gentle shadows on a clean, light-gray office background. He is wearing a dark charcoal suit jacket and a crisp white shirt, fitting the modern forest admin design aesthetic."
+							src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQUhuErvjkDgzjEYKkflSk_NuITgGrt48fApOGwJ4d7qG5LW3XNNfkTqy5g4UiXQvHyeZKRY0IcMxXvuMcA_T2yRxJOJGOKvI0JDBNpGTaT-GdjFWYXV-1uzzgNyGD5pqpAq1xrO3UMPKhkSjEggBrREup6wHXPQN_6jtU2Gi820ZIahUraOcM3MFGD2KvnPwgxBk9SVCodmW7v-8tFvSZYsIlPXIIRkWiYv04SrXbq45XOAZA9qdF5JX0lsrZ-D-IXke23KJOTnIW" />
+					</div>
+				</div>
+			</header>
+			<!-- Dashboard Content -->
+			<div class="p-lg space-y-lg">
+				<!-- Quick Metrics Grid -->
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-md">
+					<div
+						class="bg-surface-container-lowest p-md rounded-xl shadow-[0px_1px_3px_rgba(0,0,0,0.05),0px_4px_6px_rgba(0,0,0,0.02)] border border-outline-variant/30 flex flex-col justify-between">
+						<div>
+							<p
+								class="text-on-surface-variant text-label-md uppercase tracking-wider mb-xs">
+								Total Contributions
+							</p>
+							<h3 class="text-h1 font-h1 text-primary">$428,500.00</h3>
+						</div>
+						<div
+							class="mt-md flex items-center gap-xs text-secondary font-bold text-body-sm">
+							<span
+								class="material-symbols-outlined text-sm"
+								data-icon="trending_up"
+								>trending_up</span
+							>
+							<span>+12.5% vs last month</span>
+						</div>
+					</div>
+					<div
+						class="bg-surface-container-lowest p-md rounded-xl shadow-[0px_1px_3px_rgba(0,0,0,0.05),0px_4px_6px_rgba(0,0,0,0.02)] border border-outline-variant/30 flex flex-col justify-between">
+						<div>
+							<p
+								class="text-on-surface-variant text-label-md uppercase tracking-wider mb-xs">
+								Active Partners
+							</p>
+							<h3 class="text-h1 font-h1 text-primary">154</h3>
+						</div>
+						<div
+							class="mt-md flex items-center gap-xs text-secondary font-bold text-body-sm">
+							<span class="material-symbols-outlined text-sm" data-icon="add"
+								>add</span
+							>
+							<span>8 new this quarter</span>
+						</div>
+					</div>
+					<div
+						class="bg-surface-container-lowest p-md rounded-xl shadow-[0px_1px_3px_rgba(0,0,0,0.05),0px_4px_6px_rgba(0,0,0,0.02)] border border-outline-variant/30 flex flex-col justify-between">
+						<div>
+							<p
+								class="text-on-surface-variant text-label-md uppercase tracking-wider mb-xs">
+								Goal Completion
+							</p>
+							<h3 class="text-h1 font-h1 text-primary">84%</h3>
+						</div>
+						<div
+							class="mt-md w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+							<div class="bg-primary h-full w-[84%]"></div>
+						</div>
+					</div>
+					<div
+						class="bg-surface-container-lowest p-md rounded-xl shadow-[0px_1px_3px_rgba(0,0,0,0.05),0px_4px_6px_rgba(0,0,0,0.02)] border border-outline-variant/30 flex flex-col justify-between">
+						<div>
+							<p
+								class="text-on-surface-variant text-label-md uppercase tracking-wider mb-xs">
+								Next Milestone
+							</p>
+							<h3 class="text-h1 font-h1 text-primary">12 Days</h3>
+						</div>
+						<p class="mt-md text-on-surface-variant text-body-sm italic">
+							"Summer Gala Campaign"
+						</p>
+					</div>
+				</div>
+				<!-- Main CRM and Campaigns Bento -->
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+					<!-- Partners List (CRM Style) -->
+					<div
+						class="lg:col-span-8 bg-surface-container-lowest rounded-xl shadow-[0px_1px_3px_rgba(0,0,0,0.05),0px_4px_6px_rgba(0,0,0,0.02)] border border-outline-variant/30 overflow-hidden">
+						<div
+							class="p-lg border-b border-outline-variant/30 flex justify-between items-center">
+							<div>
+								<h3 class="font-h3 text-h3 text-on-surface">
+									Key Partners &amp; Donors
+								</h3>
+								<p class="text-body-sm text-on-surface-variant">
+									Recent interactions and contribution status
+								</p>
+							</div>
+							<button
+								class="bg-primary text-white px-md py-xs rounded-lg font-h3 text-h3 hover:bg-tertiary transition-colors flex items-center gap-xs">
+								<span
+									class="material-symbols-outlined text-sm"
+									data-icon="person_add"
+									>person_add</span
+								>
+								Add Partner
+							</button>
+						</div>
+						<div class="overflow-x-auto">
+							<table class="w-full text-left">
+								<thead class="bg-surface-container-high/50">
+									<tr>
+										<th
+											class="px-lg py-md text-label-md text-on-surface-variant font-bold uppercase tracking-wider">
+											Partner
+										</th>
+										<th
+											class="px-lg py-md text-label-md text-on-surface-variant font-bold uppercase tracking-wider">
+											Category
+										</th>
+										<th
+											class="px-lg py-md text-label-md text-on-surface-variant font-bold uppercase tracking-wider">
+											Last Activity
+										</th>
+										<th
+											class="px-lg py-md text-label-md text-on-surface-variant font-bold uppercase tracking-wider">
+											Total Support
+										</th>
+										<th
+											class="px-lg py-md text-label-md text-on-surface-variant font-bold uppercase tracking-wider text-right">
+											Action
+										</th>
+									</tr>
+								</thead>
+								<tbody class="divide-y divide-surface-container-low">
+									<tr class="hover:bg-surface-container/50 transition-colors">
+										<td class="px-lg py-md">
+											<div class="flex items-center gap-md">
+												<div
+													class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-white font-bold text-xs">
+													GF
+												</div>
+												<div>
+													<p class="text-body-md font-bold text-on-surface">
+														Grace Foundation
+													</p>
+													<p class="text-body-sm text-on-surface-variant">
+														contact@grace.org
+													</p>
+												</div>
+											</div>
+										</td>
+										<td class="px-lg py-md">
+											<span
+												class="bg-secondary-container text-on-secondary-container px-sm py-xs rounded-full text-label-md"
+												>Philanthropic</span
+											>
+										</td>
+										<td class="px-lg py-md text-body-md text-on-surface">
+											2 hours ago
+										</td>
+										<td class="px-lg py-md text-body-md font-bold text-primary">
+											$125,000
+										</td>
+										<td class="px-lg py-md text-right">
+											<button
+												class="text-outline hover:text-primary transition-colors">
+												<span
+													class="material-symbols-outlined"
+													data-icon="more_vert"
+													>more_vert</span
+												>
+											</button>
+										</td>
+									</tr>
+									<tr class="hover:bg-surface-container/50 transition-colors">
+										<td class="px-lg py-md">
+											<div class="flex items-center gap-md">
+												<div
+													class="w-8 h-8 rounded-full bg-secondary-fixed-dim flex items-center justify-center text-on-secondary-fixed font-bold text-xs">
+													TS
+												</div>
+												<div>
+													<p class="text-body-md font-bold text-on-surface">
+														Tech Solutions Inc.
+													</p>
+													<p class="text-body-sm text-on-surface-variant">
+														hr@techsolutions.com
+													</p>
+												</div>
+											</div>
+										</td>
+										<td class="px-lg py-md">
+											<span
+												class="bg-tertiary-container text-on-tertiary-container px-sm py-xs rounded-full text-label-md"
+												>Corporate</span
+											>
+										</td>
+										<td class="px-lg py-md text-body-md text-on-surface">
+											Yesterday
+										</td>
+										<td class="px-lg py-md text-body-md font-bold text-primary">
+											$42,300
+										</td>
+										<td class="px-lg py-md text-right">
+											<button
+												class="text-outline hover:text-primary transition-colors">
+												<span
+													class="material-symbols-outlined"
+													data-icon="more_vert"
+													>more_vert</span
+												>
+											</button>
+										</td>
+									</tr>
+									<tr class="hover:bg-surface-container/50 transition-colors">
+										<td class="px-lg py-md">
+											<div class="flex items-center gap-md">
+												<img
+													alt="Sarah Jenkins"
+													class="w-8 h-8 rounded-full border border-outline-variant"
+													data-alt="A detailed portrait of Sarah Jenkins, a professional female donor in her 30s with a warm and approachable smile. She has dark hair and is wearing a light cream-colored professional blouse. The background is a blurred office interior with soft sunlight filtering through large windows, maintaining a clean and professional corporate aesthetic consistent with the dark green forest admin theme."
+													src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtEaoSuuJsxamyZ_XWNaeJkc622Jn0ndLb-OKyV5biVduqwMAI6Zu6IqMmaFLUnphlJZWYD62V2OJonpH0NoZ3D3dZKjZ5Dkfy7W4GHdi_UR8pK7pnfaZbP0AJkVheE9IZ_SJamRpRPtbERPgz0TpRFiUkVsBF9P2AT3404wsYvcg1K-ong0oJyLNdGpdCKkHgHNYYtgwN0d_q6xf7qo3NYvyyRQEHFfu1m2XGZKZn7CcFyDULp82f_L17taPKZJJGdKoPsSiUCeFB" />
+												<div>
+													<p class="text-body-md font-bold text-on-surface">
+														Sarah Jenkins
+													</p>
+													<p class="text-body-sm text-on-surface-variant">
+														s.jenkins@email.com
+													</p>
+												</div>
+											</div>
+										</td>
+										<td class="px-lg py-md">
+											<span
+												class="bg-surface-container-high text-on-surface-variant px-sm py-xs rounded-full text-label-md"
+												>Individual</span
+											>
+										</td>
+										<td class="px-lg py-md text-body-md text-on-surface">
+											3 days ago
+										</td>
+										<td class="px-lg py-md text-body-md font-bold text-primary">
+											$8,500
+										</td>
+										<td class="px-lg py-md text-right">
+											<button
+												class="text-outline hover:text-primary transition-colors">
+												<span
+													class="material-symbols-outlined"
+													data-icon="more_vert"
+													>more_vert</span
+												>
+											</button>
+										</td>
+									</tr>
+									<tr class="hover:bg-surface-container/50 transition-colors">
+										<td class="px-lg py-md">
+											<div class="flex items-center gap-md">
+												<div
+													class="w-8 h-8 rounded-full bg-on-tertiary-container flex items-center justify-center text-white font-bold text-xs">
+													UM
+												</div>
+												<div>
+													<p class="text-body-md font-bold text-on-surface">
+														Unity Missions
+													</p>
+													<p class="text-body-sm text-on-surface-variant">
+														admin@unity.org
+													</p>
+												</div>
+											</div>
+										</td>
+										<td class="px-lg py-md">
+											<span
+												class="bg-secondary-container text-on-secondary-container px-sm py-xs rounded-full text-label-md"
+												>NGO</span
+											>
+										</td>
+										<td class="px-lg py-md text-body-md text-on-surface">
+											Last week
+										</td>
+										<td class="px-lg py-md text-body-md font-bold text-primary">
+											$56,000
+										</td>
+										<td class="px-lg py-md text-right">
+											<button
+												class="text-outline hover:text-primary transition-colors">
+												<span
+													class="material-symbols-outlined"
+													data-icon="more_vert"
+													>more_vert</span
+												>
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div
+							class="p-md bg-surface-container-high/20 border-t border-outline-variant/30 flex items-center justify-between">
+							<span class="text-label-md text-on-surface-variant"
+								>Showing 4 of 154 partners</span
+							>
+							<div class="flex gap-xs">
+								<button
+									class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant hover:bg-surface-container transition-colors">
+									<span
+										class="material-symbols-outlined text-sm"
+										data-icon="chevron_left"
+										>chevron_left</span
+									>
+								</button>
+								<button
+									class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant bg-primary text-white">
+									1
+								</button>
+								<button
+									class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant hover:bg-surface-container transition-colors">
+									2
+								</button>
+								<button
+									class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant hover:bg-surface-container transition-colors">
+									<span
+										class="material-symbols-outlined text-sm"
+										data-icon="chevron_right"
+										>chevron_right</span
+									>
+								</button>
+							</div>
+						</div>
+					</div>
+					<!-- Active Campaigns & Tracking -->
+					<div class="lg:col-span-4 space-y-lg">
+						<!-- Campaign Section -->
+						<div
+							class="bg-surface-container-lowest p-lg rounded-xl shadow-[0px_1px_3px_rgba(0,0,0,0.05),0px_4px_6px_rgba(0,0,0,0.02)] border border-outline-variant/30">
+							<h3 class="font-h3 text-h3 text-on-surface mb-md">
+								Active Campaigns
+							</h3>
+							<div class="space-y-md">
+								<div
+									class="p-md rounded-lg bg-surface-container flex flex-col gap-sm">
+									<div class="flex justify-between items-start">
+										<h4 class="font-bold text-on-surface text-body-md">
+											Legacy Builders 2024
+										</h4>
+										<span class="text-secondary text-label-md font-bold"
+											>LIVE</span
+										>
+									</div>
+									<div
+										class="w-full bg-outline-variant/30 h-2 rounded-full overflow-hidden">
+										<div class="bg-secondary h-full w-[72%]"></div>
+									</div>
+									<div
+										class="flex justify-between text-label-md text-on-surface-variant">
+										<span>$72,000 / $100,000</span>
+										<span>72%</span>
+									</div>
+								</div>
+								<div
+									class="p-md rounded-lg bg-surface-container flex flex-col gap-sm">
+									<div class="flex justify-between items-start">
+										<h4 class="font-bold text-on-surface text-body-md">
+											Campus Outreach Fund
+										</h4>
+										<span
+											class="text-on-surface-variant text-label-md font-bold"
+											>PREP</span
+										>
+									</div>
+									<div
+										class="w-full bg-outline-variant/30 h-2 rounded-full overflow-hidden">
+										<div class="bg-primary h-full w-[15%]"></div>
+									</div>
+									<div
+										class="flex justify-between text-label-md text-on-surface-variant">
+										<span>$7,500 / $50,000</span>
+										<span>15%</span>
+									</div>
+								</div>
+								<button
+									class="w-full py-md border-2 border-dashed border-outline-variant rounded-lg text-outline font-bold text-body-sm hover:border-primary hover:text-primary transition-all flex items-center justify-center gap-xs">
+									<span
+										class="material-symbols-outlined text-sm"
+										data-icon="add_circle"
+										>add_circle</span
+									>
+									Launch New Campaign
+								</button>
+							</div>
+						</div>
+						<!-- Pipeline/Funnel Section -->
+						<div
+							class="bg-primary-container p-lg rounded-xl shadow-lg relative overflow-hidden">
+							<div class="absolute top-0 right-0 p-lg opacity-10">
+								<span
+									class="material-symbols-outlined text-8xl text-white"
+									data-icon="filter_alt"
+									>filter_alt</span
+								>
+							</div>
+							<h3 class="font-h3 text-h3 text-white mb-md relative z-10">
+								Donation Pipeline
+							</h3>
+							<div class="space-y-sm relative z-10">
+								<div class="flex items-center justify-between text-white/80">
+									<span class="text-body-sm">Lead Generation</span>
+									<span class="font-bold">42</span>
+								</div>
+								<div class="h-1 bg-white/10 rounded-full w-full"></div>
+								<div class="flex items-center justify-between text-white/80">
+									<span class="text-body-sm">Initial Meeting</span>
+									<span class="font-bold">18</span>
+								</div>
+								<div class="h-1 bg-white/20 rounded-full w-[80%]"></div>
+								<div class="flex items-center justify-between text-white/80">
+									<span class="text-body-sm">Proposal Sent</span>
+									<span class="font-bold">9</span>
+								</div>
+								<div class="h-1 bg-white/30 rounded-full w-[50%]"></div>
+								<div
+									class="flex items-center justify-between text-white font-bold">
+									<span class="text-body-sm">Closing Phase</span>
+									<span>3</span>
+								</div>
+								<div
+									class="h-1 bg-secondary-fixed rounded-full w-[20%] shadow-[0_0_8px_rgba(163,246,156,0.5)]"></div>
+							</div>
+							<div class="mt-lg">
+								<p class="text-white/60 text-label-md">
+									Projected Revenue Next Month
+								</p>
+								<h4 class="text-h2 font-h2 text-secondary-fixed">$18,400</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Detailed Relationship Tracking Glassmorphism Section -->
+				<section class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+					<div
+						class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-lg flex items-start gap-lg shadow-[0px_1px_3px_rgba(0,0,0,0.05),0px_4px_6px_rgba(0,0,0,0.02)]">
+						<div class="bg-secondary-fixed/20 p-md rounded-full text-secondary">
+							<span class="material-symbols-outlined" data-icon="mail"
+								>mail</span
+							>
+						</div>
+						<div>
+							<h4 class="font-h3 text-h3 text-on-surface">Communication</h4>
+							<p class="text-body-sm text-on-surface-variant mb-md">
+								Follow-up needed for 12 partners who haven't responded to the
+								quarterly invite.
+							</p>
+							<a
+								class="text-primary font-bold text-body-sm flex items-center gap-xs"
+								href="#">
+								Manage Emails
+								<span
+									class="material-symbols-outlined text-sm"
+									data-icon="arrow_forward"
+									>arrow_forward</span
+								>
+							</a>
+						</div>
+					</div>
+					<div
+						class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-lg flex items-start gap-lg shadow-[0px_1px_3px_rgba(0,0,0,0.05),0px_4px_6px_rgba(0,0,0,0.02)]">
+						<div class="bg-primary-fixed/20 p-md rounded-full text-primary">
+							<span class="material-symbols-outlined" data-icon="receipt_long"
+								>receipt_long</span
+							>
+						</div>
+						<div>
+							<h4 class="font-h3 text-h3 text-on-surface">Tax Receipts</h4>
+							<p class="text-body-sm text-on-surface-variant mb-md">
+								84 receipts pending generation for the month of July. Automated
+								batches scheduled.
+							</p>
+							<a
+								class="text-primary font-bold text-body-sm flex items-center gap-xs"
+								href="#">
+								View Pending
+								<span
+									class="material-symbols-outlined text-sm"
+									data-icon="arrow_forward"
+									>arrow_forward</span
+								>
+							</a>
+						</div>
+					</div>
+					<div
+						class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-lg flex items-start gap-lg shadow-[0px_1px_3px_rgba(0,0,0,0.05),0px_4px_6px_rgba(0,0,0,0.02)]">
+						<div class="bg-tertiary-fixed/20 p-md rounded-full text-tertiary">
+							<span class="material-symbols-outlined" data-icon="calendar_month"
+								>calendar_month</span
+							>
+						</div>
+						<div>
+							<h4 class="font-h3 text-h3 text-on-surface">
+								Engagement Calendar
+							</h4>
+							<p class="text-body-sm text-on-surface-variant mb-md">
+								3 on-site visits and 5 virtual coffee chats scheduled for this
+								coming week.
+							</p>
+							<a
+								class="text-primary font-bold text-body-sm flex items-center gap-xs"
+								href="#">
+								Open Calendar
+								<span
+									class="material-symbols-outlined text-sm"
+									data-icon="arrow_forward"
+									>arrow_forward</span
+								>
+							</a>
+						</div>
+					</div>
+				</section>
+			</div>
+			<footer
+				class="mt-auto py-lg px-xl border-t border-outline-variant text-label-md text-on-surface-variant flex justify-between items-center bg-surface-container-lowest/50">
+				<p>© 2024 PSALM Administrative Portal. All rights reserved.</p>
+				<div class="flex gap-lg">
+					<a class="hover:text-primary transition-colors" href="#"
+						>Privacy Policy</a
+					>
+					<a class="hover:text-primary transition-colors" href="#"
+						>Support Center</a
+					>
+					<a class="hover:text-primary transition-colors" href="#"
+						>System Status</a
+					>
+				</div>
+			</footer>
+		</main>
+		<!-- FAB Action (Contextual) -->
+		<button
+			class="fixed bottom-lg right-lg w-14 h-14 bg-secondary text-white rounded-full shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-50">
+			<span class="material-symbols-outlined" data-icon="add">add</span>
+		</button>
+	</body>
+</html>

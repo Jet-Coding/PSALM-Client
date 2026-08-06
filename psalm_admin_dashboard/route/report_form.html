@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>PSALM Report Form</title>
+		<link rel="stylesheet" href="../css/admin.css" />
+	</head>
+	<body>
+		<h1 class="aig">AIG Report Form</h1>
+
+		<form action="" method="post" class="report-form">
+			<div class="form-header">
+				<label for="aig-member">AIG Member:</label>
+				<input type="text" id="aig-member" name="aig_member" /><br />
+
+				<label for="campus">Campus:</label>
+				<input type="text" id="campus" name="campus" /><br />
+
+				<label for="semester">Semester:</label>
+				<input type="text" id="semester" name="semester" /><br />
+
+				<label for="schoolyear">School Year:</label>
+				<input type="text" id="schoolyear" name="schoolyear" /><br />
+			</div>
+
+			<div class="table-container">
+				<table>
+					<caption>
+						AIG Member's Report
+					</caption>
+					<thead>
+						<tr>
+							<th>DISCIPLES</th>
+							<th>EC</th>
+							<th>SI</th>
+							<th>Lesson 1</th>
+							<th>Lesson 2</th>
+							<th>Lesson 3</th>
+							<th>Lesson 4</th>
+							<th>Lesson 5</th>
+							<th>Lesson 6</th>
+							<th>Lesson 7</th>
+							<th>Lesson 8</th>
+							<th>Lesson 9</th>
+							<th>Lesson 10</th>
+							<th>Remarks</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<input
+									type="text"
+									name="disciple_name[]"
+									placeholder="Enter Name" />
+							</td>
+
+							<td><input type="date" name="ec_date[]" /></td>
+							<td><input type="date" name="si_date[]" /></td>
+							<td><input type="date" name="w1[]" /></td>
+							<td><input type="date" name="w2[]" /></td>
+							<td><input type="date" name="w3[]" /></td>
+							<td><input type="date" name="w4[]" /></td>
+							<td><input type="date" name="w5[]" /></td>
+							<td><input type="date" name="w6[]" /></td>
+							<td><input type="date" name="w7[]" /></td>
+							<td><input type="date" name="w8[]" /></td>
+							<td><input type="date" name="w9[]" /></td>
+							<td><input type="date" name="w10[]" /></td>
+
+							<td>
+								<input type="text" name="remarks[]" placeholder="Notes..." />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input
+									type="text"
+									name="disciple_name[]"
+									placeholder="Enter Name" />
+							</td>
+
+							<td><input type="date" name="ec_date[]" /></td>
+							<td><input type="date" name="si_date[]" /></td>
+							<td><input type="date" name="w1[]" /></td>
+							<td><input type="date" name="w2[]" /></td>
+							<td><input type="date" name="w3[]" /></td>
+							<td><input type="date" name="w4[]" /></td>
+							<td><input type="date" name="w5[]" /></td>
+							<td><input type="date" name="w6[]" /></td>
+							<td><input type="date" name="w7[]" /></td>
+							<td><input type="date" name="w8[]" /></td>
+							<td><input type="date" name="w9[]" /></td>
+							<td><input type="date" name="w10[]" /></td>
+
+							<td>
+								<input type="text" name="remarks[]" placeholder="Notes..." />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input
+									type="text"
+									name="disciple_name[]"
+									placeholder="Enter Name" />
+							</td>
+
+							<td><input type="date" name="ec_date[]" /></td>
+							<td><input type="date" name="si_date[]" /></td>
+							<td><input type="date" name="w1[]" /></td>
+							<td><input type="date" name="w2[]" /></td>
+							<td><input type="date" name="w3[]" /></td>
+							<td><input type="date" name="w4[]" /></td>
+							<td><input type="date" name="w5[]" /></td>
+							<td><input type="date" name="w6[]" /></td>
+							<td><input type="date" name="w7[]" /></td>
+							<td><input type="date" name="w8[]" /></td>
+							<td><input type="date" name="w9[]" /></td>
+							<td><input type="date" name="w10[]" /></td>
+
+							<td>
+								<input type="text" name="remarks[]" placeholder="Notes..." />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input
+									type="text"
+									name="disciple_name[]"
+									placeholder="Enter Name" />
+							</td>
+
+							<td><input type="date" name="ec_date[]" /></td>
+							<td><input type="date" name="si_date[]" /></td>
+							<td><input type="date" name="w1[]" /></td>
+							<td><input type="date" name="w2[]" /></td>
+							<td><input type="date" name="w3[]" /></td>
+							<td><input type="date" name="w4[]" /></td>
+							<td><input type="date" name="w5[]" /></td>
+							<td><input type="date" name="w6[]" /></td>
+							<td><input type="date" name="w7[]" /></td>
+							<td><input type="date" name="w8[]" /></td>
+							<td><input type="date" name="w9[]" /></td>
+							<td><input type="date" name="w10[]" /></td>
+
+							<td>
+								<input type="text" name="remarks[]" placeholder="Notes..." />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<br />
+			<div class="submit-container">
+				<input
+					type="button"
+					value="Cancel Report"
+					onclick="window.location.href = 'cm_dashboard.html'" />
+				<input type="submit" value="Submit Report" />
+			</div>
+		</form>
+	</body>
+</html>

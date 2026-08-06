@@ -1,0 +1,882 @@
+<!doctype html>
+
+<html class="light" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+		<title>Statistics &amp; Analytics | PSALM Admin</title>
+		<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono&amp;display=swap"
+			rel="stylesheet" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+			rel="stylesheet" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+			rel="stylesheet" />
+		<script id="tailwind-config">
+			tailwind.config = {
+				darkMode: "class",
+				theme: {
+					extend: {
+						colors: {
+							"surface-container": "#ecefea",
+							surface: "#f8faf5",
+							"on-surface-variant": "#404942",
+							"surface-tint": "#296a4a",
+							secondary: "#1b6d24",
+							"surface-variant": "#e1e3de",
+							"on-secondary-fixed": "#002204",
+							"inverse-on-surface": "#eff1ed",
+							primary: "#00341f",
+							"on-secondary-container": "#217128",
+							"surface-container-highest": "#e1e3de",
+							"primary-container": "#004d30",
+							"on-error-container": "#93000a",
+							outline: "#707972",
+							"on-error": "#ffffff",
+							"tertiary-container": "#264939",
+							"surface-bright": "#f8faf5",
+							"tertiary-fixed": "#c4ecd5",
+							"on-primary-fixed-variant": "#085134",
+							"error-container": "#ffdad6",
+							"on-tertiary": "#ffffff",
+							"on-tertiary-fixed": "#002114",
+							"on-tertiary-fixed-variant": "#2a4e3d",
+							"inverse-primary": "#93d5ae",
+							"on-surface": "#191c1a",
+							"tertiary-fixed-dim": "#a8cfba",
+							"inverse-surface": "#2e312e",
+							"surface-container-lowest": "#ffffff",
+							"outline-variant": "#bfc9c0",
+							tertiary: "#0d3224",
+							"on-primary-container": "#7cbd98",
+							"on-tertiary-container": "#91b7a3",
+							"primary-fixed": "#aef1c9",
+							"secondary-fixed-dim": "#88d982",
+							"on-secondary": "#ffffff",
+							"on-background": "#191c1a",
+							background: "#f8faf5",
+							"primary-fixed-dim": "#93d5ae",
+							"secondary-fixed": "#a3f69c",
+							"surface-container-high": "#e6e9e4",
+							error: "#ba1a1a",
+							"surface-dim": "#d8dbd6",
+							"on-primary-fixed": "#002112",
+							"on-primary": "#ffffff",
+							"surface-container-low": "#f2f4ef",
+							"on-secondary-fixed-variant": "#005312",
+							"secondary-container": "#a0f399",
+						},
+						borderRadius: {
+							DEFAULT: "0.125rem",
+							lg: "0.25rem",
+							xl: "0.5rem",
+							full: "0.75rem",
+						},
+						spacing: {
+							xl: "32px",
+							gutter: "16px",
+							md: "16px",
+							xs: "4px",
+							sm: "12px",
+							lg: "24px",
+							base: "8px",
+							"sidebar-width": "260px",
+							"container-padding": "24px",
+						},
+						fontFamily: {
+							h1: ["Inter"],
+							"label-md": ["Inter"],
+							h2: ["Inter"],
+							"body-md": ["Inter"],
+							h3: ["Inter"],
+							code: ["JetBrains Mono"],
+							"body-sm": ["Inter"],
+						},
+						fontSize: {
+							h1: [
+								"24px",
+								{
+									lineHeight: "32px",
+									letterSpacing: "-0.02em",
+									fontWeight: "600",
+								},
+							],
+							"label-md": [
+								"12px",
+								{
+									lineHeight: "16px",
+									letterSpacing: "0.05em",
+									fontWeight: "500",
+								},
+							],
+							h2: [
+								"20px",
+								{
+									lineHeight: "28px",
+									letterSpacing: "-0.01em",
+									fontWeight: "600",
+								},
+							],
+							"body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+							h3: ["16px", { lineHeight: "24px", fontWeight: "600" }],
+							code: ["13px", { lineHeight: "20px", fontWeight: "400" }],
+							"body-sm": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+						},
+					},
+				},
+			};
+		</script>
+		<style>
+			.sidebar-item-active {
+				border-left-width: 4px;
+			}
+			.chart-bar {
+				transition: height 0.3s ease;
+			}
+			.glass-card {
+				background: rgba(255, 255, 255, 0.9);
+				backdrop-filter: blur(8px);
+			}
+			.shadow-level-1 {
+				box-shadow:
+					0px 1px 3px rgba(0, 0, 0, 0.05),
+					0px 4px 6px rgba(0, 0, 0, 0.02);
+			}
+		</style>
+	</head>
+	<body class="bg-background font-body-md text-on-surface">
+		<!-- BEGIN: Sidebar -->
+		<aside
+			class="fixed inset-y-0 left-0 z-50 w-64 bg-[#064e3b] text-white transition-all duration-300 transform lg:translate-x-0 -translate-x-full lg:inset-0"
+			data-purpose="navigation-sidebar"
+			id="sidebar">
+			<div class="flex items-center justify-between h-16 px-6 bg-[#064e3b]">
+				<span class="text-2xl font-bold tracking-wider">PSALM</span
+				><button
+					class="hidden lg:flex p-1 hover:bg-green-800 rounded transition-colors ml-auto"
+					id="sidebar-collapse-toggle">
+					<span class="material-symbols-outlined">chevron_left</span>
+				</button>
+			</div>
+			<nav class="mt-4 px-2 space-y-1 overflow-y-auto max-h-[calc(100vh-80px)]">
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="admin_dashboard.html">
+					<svg
+						class="w-5 h-5 mr-3"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+					</svg>
+					Dashboard
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="departments.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+					</svg>
+					Departments
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="board_of_trustees.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+					</svg>
+					Board of Trustees
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="campus_missionaries.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+					</svg>
+					Campus Missionaries
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="master_list.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+					</svg>
+					Master List
+				</a>
+				<a
+					class="flex items-center px-4 py-3 bg-white text-emerald-900 rounded-sm font-semibold transition-colors duration-200"
+					href="statistics.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0h6m2 0h2a2 2 0 002-2v-7a2 2 0 00-2-2h-2a2 2 0 00-2 2v7a2 2 0 002 2z"></path>
+					</svg>
+					Statistics
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="training.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+					</svg>
+					Training
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="partnership_development.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+					</svg>
+					Partnership Development
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="team.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+					</svg>
+					Team Analytics
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="user_management.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+					</svg>
+					User &amp; Role Management
+				</a>
+			</nav>
+			<div class="mt-auto px-4 space-y-4">
+				<div class="pt-4 border-t border-white/10 space-y-1">
+					<a
+						class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+						href="settings.html">
+						<svg
+							class="w-5 h-5 mr-3 opacity-80"
+							fill="none"
+							stroke="currentColor"
+							viewbox="0 0 24 24">
+							<path
+								d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+							<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+						</svg>
+						Settings
+					</a>
+					<a
+						class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+						href="logout.html">
+						<svg
+							class="w-5 h-5 mr-3 opacity-80"
+							fill="none"
+							stroke="currentColor"
+							viewbox="0 0 24 24">
+							<path
+								d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+						</svg>
+						Logout
+					</a>
+				</div>
+			</div>
+		</aside>
+		<!-- END: Sidebar -->
+		<!-- TopNavBar -->
+		<header
+			class="flex justify-between items-center px-lg py-md ml-sidebar-width w-[calc(100%-260px)] bg-surface border-b border-outline-variant fixed top-0 z-40">
+			<div class="flex items-center gap-lg">
+				<h2 class="font-h2 text-h2 font-black text-primary">PSALM Admin</h2>
+				<div class="relative group">
+					<span
+						class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-outline"
+						>search</span
+					>
+					<input
+						class="bg-surface-container-low border border-outline-variant rounded-xl pl-10 pr-md py-xs text-body-md focus:ring-2 focus:ring-primary/20 outline-none w-64 transition-all focus:w-80"
+						placeholder="Search analytics..."
+						type="text" />
+				</div>
+			</div>
+			<div class="flex items-center gap-md">
+				<button
+					class="p-base text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors relative">
+					<span class="material-symbols-outlined">notifications</span>
+					<span
+						class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+				</button>
+				<button
+					class="p-base text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+					<span class="material-symbols-outlined">help_outline</span>
+				</button>
+				<button
+					class="p-base text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+					<span class="material-symbols-outlined">settings</span>
+				</button>
+			</div>
+		</header>
+		<!-- Main Content -->
+		<main class="ml-sidebar-width mt-[72px] p-lg">
+			<!-- Dashboard Header & Date Range -->
+			<div
+				class="flex flex-col md:flex-row md:items-center justify-between gap-md mb-xl">
+				<div>
+					<h3 class="font-h1 text-h1 text-primary">
+						Growth &amp; Impact Statistics
+					</h3>
+					<p class="text-on-surface-variant">
+						Analyzing reach across 12 campus missionary departments.
+					</p>
+				</div>
+				<div
+					class="flex items-center gap-sm bg-white p-base rounded-xl border border-outline-variant shadow-sm">
+					<span class="material-symbols-outlined text-primary text-sm"
+						>calendar_month</span
+					>
+					<select
+						class="border-none bg-transparent text-body-md font-medium text-on-surface focus:ring-0 cursor-pointer">
+						<option>Last 30 Days</option>
+						<option>Last Quarter</option>
+						<option>Year to Date</option>
+						<option>Custom Range</option>
+					</select>
+					<div class="h-4 w-px bg-outline-variant mx-xs"></div>
+					<button
+						class="bg-primary text-white px-md py-xs rounded-lg text-label-md font-bold hover:bg-primary-container transition-all">
+						Export Report
+					</button>
+				</div>
+			</div>
+			<!-- KPI Grid -->
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg mb-xl">
+				<div
+					class="bg-white p-lg rounded-xl shadow-level-1 border-b-4 border-primary">
+					<div class="flex items-center justify-between mb-sm">
+						<span class="text-outline font-label-md uppercase tracking-wider"
+							>Total Missionaries</span
+						>
+						<span class="material-symbols-outlined text-primary"
+							>person_celebrate</span
+						>
+					</div>
+					<div class="flex items-end gap-base">
+						<span class="text-h1 font-h1 text-on-surface">1,248</span>
+						<span
+							class="text-secondary font-label-md mb-base flex items-center">
+							<span class="material-symbols-outlined text-sm">trending_up</span>
+							12%
+						</span>
+					</div>
+					<p class="text-on-surface-variant text-body-sm mt-xs">
+						Across all regions
+					</p>
+				</div>
+				<div
+					class="bg-white p-lg rounded-xl shadow-level-1 border-b-4 border-secondary">
+					<div class="flex items-center justify-between mb-sm">
+						<span class="text-outline font-label-md uppercase tracking-wider"
+							>Active Campus Units</span
+						>
+						<span class="material-symbols-outlined text-secondary">school</span>
+					</div>
+					<div class="flex items-end gap-base">
+						<span class="text-h1 font-h1 text-on-surface">84</span>
+						<span
+							class="text-secondary font-label-md mb-base flex items-center">
+							<span class="material-symbols-outlined text-sm">trending_up</span>
+							4%
+						</span>
+					</div>
+					<p class="text-on-surface-variant text-body-sm mt-xs">
+						6 new this semester
+					</p>
+				</div>
+				<div
+					class="bg-white p-lg rounded-xl shadow-level-1 border-b-4 border-tertiary-container">
+					<div class="flex items-center justify-between mb-sm">
+						<span class="text-outline font-label-md uppercase tracking-wider"
+							>Annual Funding</span
+						>
+						<span class="material-symbols-outlined text-tertiary-container"
+							>payments</span
+						>
+					</div>
+					<div class="flex items-end gap-base">
+						<span class="text-h1 font-h1 text-on-surface">$342k</span>
+						<span class="text-error font-label-md mb-base flex items-center">
+							<span class="material-symbols-outlined text-sm"
+								>trending_down</span
+							>
+							2%
+						</span>
+					</div>
+					<p class="text-on-surface-variant text-body-sm mt-xs">
+						92% of target reached
+					</p>
+				</div>
+				<div
+					class="bg-white p-lg rounded-xl shadow-level-1 border-b-4 border-outline">
+					<div class="flex items-center justify-between mb-sm">
+						<span class="text-outline font-label-md uppercase tracking-wider"
+							>Stakeholders</span
+						>
+						<span class="material-symbols-outlined text-outline">hub</span>
+					</div>
+					<div class="flex items-end gap-base">
+						<span class="text-h1 font-h1 text-on-surface">4,902</span>
+						<span
+							class="text-secondary font-label-md mb-base flex items-center">
+							<span class="material-symbols-outlined text-sm">trending_up</span>
+							18%
+						</span>
+					</div>
+					<p class="text-on-surface-variant text-body-sm mt-xs">
+						Including partners &amp; alumni
+					</p>
+				</div>
+			</div>
+			<!-- Bento Grid Analytics -->
+			<div class="grid grid-cols-12 gap-lg h-auto">
+				<!-- Main Trend Chart -->
+				<div
+					class="col-span-12 lg:col-span-8 bg-white p-lg rounded-xl shadow-level-1 min-h-[400px] flex flex-col">
+					<div class="flex items-center justify-between mb-lg">
+						<div>
+							<h4 class="font-h3 text-h3 text-primary">
+								Involvement Growth Trends
+							</h4>
+							<p class="text-on-surface-variant text-body-sm">
+								Tracking student involvement over the past 12 months.
+							</p>
+						</div>
+						<div class="flex gap-base">
+							<span class="flex items-center gap-xs font-label-md text-primary">
+								<span class="w-3 h-3 rounded-full bg-primary"></span> Core
+								Leaders
+							</span>
+							<span
+								class="flex items-center gap-xs font-label-md text-secondary">
+								<span class="w-3 h-3 rounded-full bg-secondary"></span> General
+								Members
+							</span>
+						</div>
+					</div>
+					<div
+						class="flex-1 flex items-end justify-between gap-base pt-xl relative border-l border-b border-outline-variant ml-lg">
+						<!-- Faux Line Chart Visualization with Gradients -->
+						<svg
+							class="absolute inset-0 w-full h-full overflow-visible p-base pointer-events-none"
+							viewbox="0 0 800 200">
+							<path
+								d="M0,150 Q100,120 200,160 T400,100 T600,130 T800,40"
+								fill="none"
+								stroke="#00341f"
+								stroke-linecap="round"
+								stroke-width="3"></path>
+							<path
+								d="M0,180 Q100,170 200,190 T400,140 T600,160 T800,100"
+								fill="none"
+								stroke="#1b6d24"
+								stroke-dasharray="4"
+								stroke-linecap="round"
+								stroke-width="2"></path>
+							<!-- Circles on nodes -->
+							<circle cx="200" cy="160" fill="#00341f" r="4"></circle>
+							<circle cx="400" cy="100" fill="#00341f" r="4"></circle>
+							<circle cx="600" cy="130" fill="#00341f" r="4"></circle>
+							<circle cx="800" cy="40" fill="#00341f" r="4"></circle>
+						</svg>
+						<!-- Month Labels -->
+						<div
+							class="absolute bottom-[-30px] left-0 right-0 flex justify-between text-body-sm text-outline-variant font-medium px-md">
+							<span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span
+							><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span
+							><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
+						</div>
+					</div>
+				</div>
+				<!-- Demographic Distribution -->
+				<div
+					class="col-span-12 lg:col-span-4 bg-white p-lg rounded-xl shadow-level-1 flex flex-col">
+					<h4 class="font-h3 text-h3 text-primary mb-base">
+						Missionary Breakdown
+					</h4>
+					<p class="text-on-surface-variant text-body-sm mb-lg">
+						Distribution by missionary status.
+					</p>
+					<div class="flex-1 flex flex-col justify-center gap-lg">
+						<div class="relative w-48 h-48 mx-auto">
+							<!-- Custom Radial Chart Representation -->
+							<div
+								class="absolute inset-0 rounded-full border-[16px] border-primary-container"></div>
+							<div
+								class="absolute inset-0 rounded-full border-[16px] border-secondary border-t-transparent border-l-transparent -rotate-45"></div>
+							<div
+								class="absolute inset-0 flex flex-col items-center justify-center">
+								<span class="font-h1 text-h1 text-primary">1.2k</span>
+								<span class="text-body-sm text-outline">Total</span>
+							</div>
+						</div>
+						<div class="space-y-sm">
+							<div class="flex items-center justify-between">
+								<div class="flex items-center gap-base">
+									<span
+										class="w-3 h-3 rounded-full bg-primary-container"></span>
+									<span class="text-body-md">Full-time</span>
+								</div>
+								<span class="font-bold">64%</span>
+							</div>
+							<div class="flex items-center justify-between">
+								<div class="flex items-center gap-base">
+									<span class="w-3 h-3 rounded-full bg-secondary"></span>
+									<span class="text-body-md">Volunteers</span>
+								</div>
+								<span class="font-bold">28%</span>
+							</div>
+							<div class="flex items-center justify-between">
+								<div class="flex items-center gap-base">
+									<span class="w-3 h-3 rounded-full bg-tertiary-fixed"></span>
+									<span class="text-body-md">Interns</span>
+								</div>
+								<span class="font-bold">8%</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Regional Statistics Table -->
+				<div
+					class="col-span-12 bg-white rounded-xl shadow-level-1 overflow-hidden">
+					<div
+						class="p-lg border-b border-surface-container-high flex justify-between items-center">
+						<div>
+							<h4 class="font-h3 text-h3 text-primary">Regional Performance</h4>
+							<p class="text-on-surface-variant text-body-sm">
+								Key metrics across the five primary regions.
+							</p>
+						</div>
+						<button
+							class="text-primary hover:bg-primary/5 px-md py-base rounded-lg transition-colors flex items-center gap-xs font-bold">
+							<span class="material-symbols-outlined text-sm">filter_list</span>
+							Filter Table
+						</button>
+					</div>
+					<div class="overflow-x-auto">
+						<table class="w-full text-left border-collapse">
+							<thead>
+								<tr class="bg-surface-container-high">
+									<th
+										class="px-lg py-md text-label-md font-bold text-on-surface-variant uppercase tracking-wider">
+										Region
+									</th>
+									<th
+										class="px-lg py-md text-label-md font-bold text-on-surface-variant uppercase tracking-wider">
+										Campus Units
+									</th>
+									<th
+										class="px-lg py-md text-label-md font-bold text-on-surface-variant uppercase tracking-wider">
+										Growth
+									</th>
+									<th
+										class="px-lg py-md text-label-md font-bold text-on-surface-variant uppercase tracking-wider">
+										Active Leaders
+									</th>
+									<th
+										class="px-lg py-md text-label-md font-bold text-on-surface-variant uppercase tracking-wider">
+										Status
+									</th>
+									<th
+										class="px-lg py-md text-label-md font-bold text-on-surface-variant uppercase tracking-wider"></th>
+								</tr>
+							</thead>
+							<tbody class="divide-y divide-surface-container-high">
+								<tr class="hover:bg-surface-container transition-colors group">
+									<td class="px-lg py-md">
+										<div class="flex items-center gap-md">
+											<div
+												class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center text-white">
+												N
+											</div>
+											<span class="font-bold">Northern Sector</span>
+										</div>
+									</td>
+									<td class="px-lg py-md">24 Units</td>
+									<td class="px-lg py-md">
+										<span class="text-secondary flex items-center gap-xs">
+											<span class="material-symbols-outlined text-sm"
+												>trending_up</span
+											>
+											+8%
+										</span>
+									</td>
+									<td class="px-lg py-md">
+										<div class="flex -space-x-2">
+											<img
+												alt="Avatar User 1"
+												class="w-8 h-8 rounded-full border-2 border-white"
+												src="https://lh3.googleusercontent.com/aida-public/AB6AXuBT5ujbfMec5Y0m9FIO_RXEotXljseYKuls9cdbuH1MFYgpb1DwL_X_mQw4ecnW4DC0it8cU9tCRAtnfYpLR87nOZCqf_QlpgsgmMnkA--zfuc_HeTJHwyu2CtUtqnn2GFD6g9iBHQO6wJgzLRxdndAaDjyYY_3dCoJHEBdn98akt1-gxML3W5VYtp5PNhmmcSgFx9MPi6Rg-8dFDZMe8G3jGOYRNL568gAF3vpPpjuI4xrKMxlwrmODXqSQUZ1nhtK0Gom3VLzAMmZ" />
+											<img
+												alt="Avatar User 2"
+												class="w-8 h-8 rounded-full border-2 border-white"
+												src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMSBRdSF45rpJDkgdZxqYqsPRpTk7voxDta1qZfGpnrx9F1yYqfnGVFGhjWlShOc02qvDQx85HRO7PNzUCoF80BJH-euWLETTOyhUqGO9HsFOWmrvIx3o4a8bYrODJr5Aj9rlwk5zNyXz4C1GVktVjDVIPoi_WPPnOxVhJeKzVaS-wrEKTsjO6ReKbuSc25V5DefLquUpGUGcw7OU7VOSwEH_yLxHo8-ibv6Rz6YKrnHvWO0fXFHjflig3zIFeRYuq4U2ffxRLG5DQ" />
+											<div
+												class="w-8 h-8 rounded-full bg-surface-variant border-2 border-white flex items-center justify-center text-[10px] font-bold">
+												+12
+											</div>
+										</div>
+									</td>
+									<td class="px-lg py-md">
+										<span
+											class="bg-secondary-container text-on-secondary-container px-base py-xs rounded-full text-label-md font-bold"
+											>Stable</span
+										>
+									</td>
+									<td class="px-lg py-md text-right">
+										<button
+											class="text-outline hover:text-primary group-hover:scale-110 transition-all">
+											<span class="material-symbols-outlined">more_vert</span>
+										</button>
+									</td>
+								</tr>
+								<tr class="hover:bg-surface-container transition-colors group">
+									<td class="px-lg py-md">
+										<div class="flex items-center gap-md">
+											<div
+												class="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-white">
+												C
+											</div>
+											<span class="font-bold">Central District</span>
+										</div>
+									</td>
+									<td class="px-lg py-md">18 Units</td>
+									<td class="px-lg py-md">
+										<span class="text-secondary flex items-center gap-xs">
+											<span class="material-symbols-outlined text-sm"
+												>trending_up</span
+											>
+											+15%
+										</span>
+									</td>
+									<td class="px-lg py-md">
+										<div class="flex -space-x-2">
+											<img
+												alt="Avatar User 3"
+												class="w-8 h-8 rounded-full border-2 border-white"
+												src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHSouF1OkKmJ-xeUXsv_PGlYTKza_xI1RpCk7Fdm313G4uTfp0sfmnruHct6zL5kbiTWM5ztqWb4dXZ6iq3DTl3o5isZFUkhYcYOrhkGgWtVdBlgnC41TNPf-a75wlkkFhEisvSHCGwZR6K7klaiQ50Nfw6WOaYkwErheHtydiWDwE7LS5WXtNcroG4lfYBb2jJJJtE_wenTqZ0Ed8sq_lRiFFi8wBCjmUwaRtss1L3XMA0eOb5WNgZRoXqAHgZz5lSGdI4PBlWCI7" />
+											<img
+												alt="Avatar User 4"
+												class="w-8 h-8 rounded-full border-2 border-white"
+												src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDgk09Cu9kEK52nvvxPGe2RemWXQX27_TDepAToYNfDafnNvJc4B7bQpGGE-x1vapYrWNA0kcVgkayIK73Pxv74b3Bfj4f-KHwq9uXLLlYqQ3kQwOkTSfa8Fzu0jikszTpr4C-6qDC4sJ3UC7uA4spGpPP-fz8TChjNXCHN1UCYCIs_UYPbeQbu9oeVpLLJT08eUDXEI5AI_fdu0ZvgUXb9AaQ0xRiKmvSlevDTTeaYdqSJsrHk8t2qttQhaKAXEsqCmKRoron4ZTx" />
+											<div
+												class="w-8 h-8 rounded-full bg-surface-variant border-2 border-white flex items-center justify-center text-[10px] font-bold">
+												+08
+											</div>
+										</div>
+									</td>
+									<td class="px-lg py-md">
+										<span
+											class="bg-primary-fixed text-on-primary-fixed px-base py-xs rounded-full text-label-md font-bold"
+											>High Performing</span
+										>
+									</td>
+									<td class="px-lg py-md text-right">
+										<button
+											class="text-outline hover:text-primary group-hover:scale-110 transition-all">
+											<span class="material-symbols-outlined">more_vert</span>
+										</button>
+									</td>
+								</tr>
+								<tr class="hover:bg-surface-container transition-colors group">
+									<td class="px-lg py-md">
+										<div class="flex items-center gap-md">
+											<div
+												class="w-8 h-8 rounded-lg bg-tertiary-container flex items-center justify-center text-white">
+												S
+											</div>
+											<span class="font-bold">Southern Hub</span>
+										</div>
+									</td>
+									<td class="px-lg py-md">12 Units</td>
+									<td class="px-lg py-md">
+										<span class="text-error flex items-center gap-xs">
+											<span class="material-symbols-outlined text-sm"
+												>trending_down</span
+											>
+											-3%
+										</span>
+									</td>
+									<td class="px-lg py-md">
+										<div class="flex -space-x-2">
+											<img
+												alt="Avatar User 5"
+												class="w-8 h-8 rounded-full border-2 border-white"
+												src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAnAlUS8Iz_cJHnHkkHH7e2RlJNTyyUiB363dVMHTKzllL1nacF-xlsFSM3NScVyB6P6_OT8nAZGDdrzqwOK9CofiVZCkCQWSqYKYBzHc3YNhcTCasgEKdo33Ybgk2gzFjUgtPi__vlduqlI6YEIDXhcX6ojYNhfx2DOfkOME20Ghd7b6rYEEUy0UoiLhrzFwewvwVQHXk9vXnTNgbkeXxYMcdau9joGM9P4xIjAaAEDl-XqEgyTT78XU1zXo4OW6gNnq6E3EZinZS" />
+											<div
+												class="w-8 h-8 rounded-full bg-surface-variant border-2 border-white flex items-center justify-center text-[10px] font-bold">
+												+05
+											</div>
+										</div>
+									</td>
+									<td class="px-lg py-md">
+										<span
+											class="bg-error-container text-on-error-container px-base py-xs rounded-full text-label-md font-bold"
+											>Needs Attention</span
+										>
+									</td>
+									<td class="px-lg py-md text-right">
+										<button
+											class="text-outline hover:text-primary group-hover:scale-110 transition-all">
+											<span class="material-symbols-outlined">more_vert</span>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div
+						class="p-md bg-surface-container-low flex items-center justify-between text-body-sm text-outline">
+						<span>Showing 3 of 5 Regional Sectors</span>
+						<div class="flex gap-sm">
+							<button
+								class="p-xs hover:bg-surface-container-high rounded transition-colors disabled:opacity-50"
+								disabled="">
+								<span class="material-symbols-outlined text-sm"
+									>chevron_left</span
+								>
+							</button>
+							<button
+								class="p-xs hover:bg-surface-container-high rounded transition-colors">
+								<span class="material-symbols-outlined text-sm"
+									>chevron_right</span
+								>
+							</button>
+						</div>
+					</div>
+				</div>
+				<!-- Activity Heatmap / Bento Item -->
+				<div
+					class="col-span-12 lg:col-span-6 bg-white p-lg rounded-xl shadow-level-1">
+					<div class="flex items-center justify-between mb-lg">
+						<h4 class="font-h3 text-h3 text-primary">
+							Departmental Efficiency
+						</h4>
+						<span class="material-symbols-outlined text-outline">info</span>
+					</div>
+					<div class="space-y-lg">
+						<div class="space-y-xs">
+							<div class="flex justify-between text-body-sm">
+								<span class="font-medium">Finance &amp; Stewardship</span>
+								<span class="text-primary font-bold">94%</span>
+							</div>
+							<div
+								class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+								<div
+									class="bg-primary-container h-full rounded-full"
+									style="width: 94%"></div>
+							</div>
+						</div>
+						<div class="space-y-xs">
+							<div class="flex justify-between text-body-sm">
+								<span class="font-medium">Evangelism &amp; Outreach</span>
+								<span class="text-secondary font-bold">78%</span>
+							</div>
+							<div
+								class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+								<div
+									class="bg-secondary h-full rounded-full"
+									style="width: 78%"></div>
+							</div>
+						</div>
+						<div class="space-y-xs">
+							<div class="flex justify-between text-body-sm">
+								<span class="font-medium">Media &amp; Communications</span>
+								<span class="text-tertiary-container font-bold">88%</span>
+							</div>
+							<div
+								class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+								<div
+									class="bg-tertiary-container h-full rounded-full"
+									style="width: 88%"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Recent Highlights -->
+				<div
+					class="col-span-12 lg:col-span-6 bg-primary p-lg rounded-xl shadow-level-1 relative overflow-hidden group">
+					<div class="relative z-10">
+						<h4 class="font-h3 text-h3 text-white mb-base">Projected Reach</h4>
+						<p class="text-white/70 text-body-md mb-xl max-w-[70%]">
+							Based on current trends, we are on track to increase campus units
+							by 15% by next academic year.
+						</p>
+						<div class="flex items-center gap-xl text-white">
+							<div>
+								<p class="text-label-md uppercase opacity-60">
+									Estimated Total
+								</p>
+								<p class="font-h1 text-h1">1.8k</p>
+							</div>
+							<div class="w-px h-10 bg-white/20"></div>
+							<div>
+								<p class="text-label-md uppercase opacity-60">Growth Rate</p>
+								<p class="font-h1 text-h1">+22%</p>
+							</div>
+						</div>
+					</div>
+					<!-- Abstract visual element -->
+					<div
+						class="absolute bottom-0 right-0 w-48 h-48 translate-x-12 translate-y-12 opacity-10 group-hover:scale-110 transition-transform">
+						<span class="material-symbols-outlined text-[160px] text-white"
+							>trending_up</span
+						>
+					</div>
+				</div>
+			</div>
+		</main>
+		<!-- FAB (Suppressed based on context: Details/Transactional/Dashboard secondary focus) -->
+		<!-- The FAB is suppressed here as it's a data-heavy analytics screen -->
+	</body>
+</html>

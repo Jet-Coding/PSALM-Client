@@ -1,0 +1,1079 @@
+<!doctype html>
+
+<html class="light" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+		<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono&amp;display=swap"
+			rel="stylesheet" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+			rel="stylesheet" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+			rel="stylesheet" />
+		<script id="tailwind-config">
+			tailwind.config = {
+				darkMode: "class",
+				theme: {
+					extend: {
+						colors: {
+							"inverse-surface": "#2e312e",
+							tertiary: "#0d3224",
+							"primary-container": "#004d30",
+							"surface-container-low": "#f2f4ef",
+							"on-secondary": "#ffffff",
+							"outline-variant": "#bfc9c0",
+							"on-primary-fixed-variant": "#085134",
+							"on-tertiary-fixed-variant": "#2a4e3d",
+							primary: "#00341f",
+							"on-background": "#191c1a",
+							"inverse-primary": "#93d5ae",
+							"surface-container-high": "#e6e9e4",
+							"on-error-container": "#93000a",
+							"tertiary-fixed-dim": "#a8cfba",
+							"on-tertiary": "#ffffff",
+							"inverse-on-surface": "#eff1ed",
+							"secondary-fixed": "#a3f69c",
+							"tertiary-container": "#264939",
+							secondary: "#1b6d24",
+							"primary-fixed": "#aef1c9",
+							"tertiary-fixed": "#c4ecd5",
+							"on-primary-container": "#7cbd98",
+							"surface-container-lowest": "#ffffff",
+							"on-surface-variant": "#404942",
+							"surface-variant": "#e1e3de",
+							"surface-container": "#ecefea",
+							"on-tertiary-fixed": "#002114",
+							"on-tertiary-container": "#91b7a3",
+							"on-secondary-container": "#217128",
+							"on-primary-fixed": "#002112",
+							background: "#f8faf5",
+							"surface-bright": "#f8faf5",
+							"on-primary": "#ffffff",
+							outline: "#707972",
+							"surface-dim": "#d8dbd6",
+							"on-error": "#ffffff",
+							"error-container": "#ffdad6",
+							"surface-container-highest": "#e1e3de",
+							"on-secondary-fixed": "#002204",
+							"surface-tint": "#296a4a",
+							"secondary-fixed-dim": "#88d982",
+							"secondary-container": "#a0f399",
+							"on-secondary-fixed-variant": "#005312",
+							"primary-fixed-dim": "#93d5ae",
+							"on-surface": "#191c1a",
+							error: "#ba1a1a",
+							surface: "#f8faf5",
+						},
+						borderRadius: {
+							DEFAULT: "0.125rem",
+							lg: "0.25rem",
+							xl: "0.5rem",
+							full: "0.75rem",
+						},
+						spacing: {
+							sm: "12px",
+							md: "16px",
+							"container-padding": "24px",
+							xs: "4px",
+							gutter: "16px",
+							"sidebar-width": "260px",
+							lg: "24px",
+							base: "8px",
+							xl: "32px",
+						},
+						fontFamily: {
+							h2: ["Inter"],
+							"body-sm": ["Inter"],
+							h1: ["Inter"],
+							code: ["JetBrains Mono"],
+							"body-md": ["Inter"],
+							"label-md": ["Inter"],
+							h3: ["Inter"],
+						},
+						fontSize: {
+							h2: [
+								"20px",
+								{
+									lineHeight: "28px",
+									letterSpacing: "-0.01em",
+									fontWeight: "600",
+								},
+							],
+							"body-sm": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+							h1: [
+								"24px",
+								{
+									lineHeight: "32px",
+									letterSpacing: "-0.02em",
+									fontWeight: "600",
+								},
+							],
+							code: ["13px", { lineHeight: "20px", fontWeight: "400" }],
+							"body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+							"label-md": [
+								"12px",
+								{
+									lineHeight: "16px",
+									letterSpacing: "0.05em",
+									fontWeight: "500",
+								},
+							],
+							h3: ["16px", { lineHeight: "24px", fontWeight: "600" }],
+						},
+					},
+				},
+			};
+		</script>
+		<style>
+			body {
+				background-color: #f4f7f6;
+			}
+			.card-shadow {
+				box-shadow:
+					0px 1px 3px rgba(0, 0, 0, 0.05),
+					0px 4px 6px rgba(0, 0, 0, 0.02);
+			}
+			.sidebar-active {
+				background: rgba(255, 255, 255, 0.1);
+				border-left: 4px solid #ffffff;
+				font-weight: 700;
+				color: #ffffff;
+			}
+			.sidebar-inactive {
+				color: rgba(255, 255, 255, 0.7);
+				transition: all 0.2s ease;
+			}
+			.sidebar-inactive:hover {
+				background: rgba(255, 255, 255, 0.05);
+				color: #ffffff;
+			}
+			.custom-scrollbar::-webkit-scrollbar {
+				width: 4px;
+			}
+			.custom-scrollbar::-webkit-scrollbar-track {
+				background: transparent;
+			}
+			.custom-scrollbar::-webkit-scrollbar-thumb {
+				background: rgba(255, 255, 255, 0.2);
+				border-radius: 10px;
+			}
+		</style>
+	</head>
+	<body class="font-body-md text-on-surface">
+		<!-- BEGIN: Sidebar -->
+		<aside
+			class="fixed inset-y-0 left-0 z-50 w-64 bg-[#064e3b] text-white transition-all duration-300 transform lg:translate-x-0 -translate-x-full lg:inset-0"
+			data-purpose="navigation-sidebar"
+			id="sidebar">
+			<div class="flex items-center justify-between h-16 px-6 bg-[#064e3b]">
+				<span class="text-2xl font-bold tracking-wider">PSALM</span
+				><button
+					class="hidden lg:flex p-1 hover:bg-green-800 rounded transition-colors ml-auto"
+					id="sidebar-collapse-toggle">
+					<span class="material-symbols-outlined">chevron_left</span>
+				</button>
+			</div>
+			<nav class="mt-4 px-2 space-y-1 overflow-y-auto max-h-[calc(100vh-80px)]">
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="admin_dashboard.html">
+					<svg
+						class="w-5 h-5 mr-3"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+					</svg>
+					Dashboard
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="departments.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+					</svg>
+					Departments
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="board_of_trustees.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+					</svg>
+					Board of Trustees
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="campus_missionaries.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+					</svg>
+					Campus Missionaries
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="master_list.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+					</svg>
+					Master List
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="statistics.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0h6m2 0h2a2 2 0 002-2v-7a2 2 0 00-2-2h-2a2 2 0 00-2 2v7a2 2 0 002 2z"></path>
+					</svg>
+					Statistics
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="training.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+					</svg>
+					Training
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="partnership_development.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+					</svg>
+					Partnership Development
+				</a>
+				<a
+					class="flex items-center px-4 py-3 bg-white text-emerald-900 rounded-sm font-semibold transition-colors duration-200"
+					href="team.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+					</svg>
+					Team Analytics
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="user_management.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+					</svg>
+					User &amp; Role Management
+				</a>
+			</nav>
+			<div class="mt-auto px-4 space-y-4">
+				<div class="pt-4 border-t border-white/10 space-y-1">
+					<a
+						class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+						href="settings.html">
+						<svg
+							class="w-5 h-5 mr-3 opacity-80"
+							fill="none"
+							stroke="currentColor"
+							viewbox="0 0 24 24">
+							<path
+								d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+							<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+						</svg>
+						Settings
+					</a>
+					<a
+						class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+						href="logout.html">
+						<svg
+							class="w-5 h-5 mr-3 opacity-80"
+							fill="none"
+							stroke="currentColor"
+							viewbox="0 0 24 24">
+							<path
+								d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+						</svg>
+						Logout
+					</a>
+				</div>
+			</div>
+		</aside>
+		<!-- END: Sidebar -->
+		<!-- Main Content Wrapper -->
+		<div class="ml-sidebar-width flex flex-col min-h-screen">
+			<!-- Top Bar Navigation -->
+			<header
+				class="sticky top-0 z-40 bg-surface border-b border-outline-variant flex justify-between items-center px-lg py-md h-16">
+				<div class="flex items-center gap-xl flex-1">
+					<div class="relative w-full max-w-md">
+						<span
+							class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant"
+							>search</span
+						>
+						<input
+							class="w-full pl-xl pr-md py-xs bg-surface-container border border-outline-variant rounded-xl text-body-md focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all outline-none"
+							placeholder="Search analytics, personnel, or regions..."
+							type="text" />
+					</div>
+				</div>
+				<div class="flex items-center gap-lg">
+					<div class="flex items-center gap-md">
+						<button
+							class="p-xs text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors relative">
+							<span class="material-symbols-outlined">notifications</span>
+							<span
+								class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+						</button>
+						<button
+							class="p-xs text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+							<span class="material-symbols-outlined">help_outline</span>
+						</button>
+						<button
+							class="p-xs text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+							<span class="material-symbols-outlined">settings</span>
+						</button>
+					</div>
+					<div class="h-8 w-[1px] bg-outline-variant mx-xs"></div>
+					<div
+						class="flex items-center gap-md cursor-pointer hover:bg-surface-container-high p-xs pr-sm rounded-full transition-all">
+						<img
+							alt="Administrator Profile"
+							class="w-8 h-8 rounded-full border border-outline-variant"
+							data-alt="A professional headshot of a middle-aged male administrator with a confident smile, wearing a dark green blazer over a white shirt. The background is a clean, softly blurred office environment with natural sunlight streaming through windows. The overall aesthetic is professional and high-contrast, fitting a corporate light-mode theme."
+							src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQSc5MociBLfNa3B80tUEPUe2gtiyP3RNCEXD2-7t05ep3vk6pLZI5DvvjmFrUGzCkODDgRn5i-F75YbDb1TEe6fNDFh8imdxpU_Og6BWatGL8d8if_bF0_FEgBE-eYwfNEEC1wR2xFSMpbqXct0KvjexG-N0PnR_j_1kTGamiWCRko1BP9OC5MXe-YFd640fQM-pw-vxHFxTfeScraZrwHrqhaQvX4PK9eRGQ85tg5PFpOT6T6AbU4sC4OvpJXm1ESva7DNjaz1yN" />
+						<div class="flex flex-col">
+							<span class="text-body-md font-bold text-primary"
+								>Dr. Julian Vance</span
+							>
+							<span
+								class="text-[10px] text-on-surface-variant uppercase font-medium"
+								>Head Administrator</span
+							>
+						</div>
+					</div>
+				</div>
+			</header>
+			<!-- Content Canvas -->
+			<main class="p-lg space-y-lg">
+				<!-- Dashboard Header -->
+				<div class="flex justify-between items-end">
+					<div>
+						<h2 class="font-h1 text-h1 text-primary">
+							Team Analytics Overview
+						</h2>
+						<p class="text-on-surface-variant">
+							Analyzing performance metrics across 12 campus regions for Q3
+							2024.
+						</p>
+					</div>
+					<div class="flex gap-sm">
+						<button
+							class="flex items-center gap-xs px-md py-xs border border-outline-variant rounded-xl text-body-md font-medium text-on-surface hover:bg-surface-container-high transition-all">
+							<span class="material-symbols-outlined text-[20px]"
+								>calendar_today</span
+							>
+							Last 30 Days
+						</button>
+						<button
+							class="flex items-center gap-xs px-md py-xs bg-primary text-white rounded-xl text-body-md font-medium hover:bg-tertiary transition-all">
+							<span class="material-symbols-outlined text-[20px]"
+								>file_download</span
+							>
+							Export Data
+						</button>
+					</div>
+				</div>
+				<!-- Performance Bento Grid -->
+				<div class="grid grid-cols-12 gap-lg h-auto">
+					<!-- Key Metrics Row -->
+					<div class="col-span-12 grid grid-cols-4 gap-lg">
+						<div
+							class="bg-white p-lg rounded-xl card-shadow border border-outline-variant/30 group">
+							<div class="flex justify-between items-start mb-md">
+								<div
+									class="bg-primary/5 p-sm rounded-lg group-hover:bg-primary/10 transition-colors">
+									<span class="material-symbols-outlined text-primary"
+										>diversity_3</span
+									>
+								</div>
+								<span
+									class="text-secondary text-label-md font-bold flex items-center gap-xs">
+									<span class="material-symbols-outlined text-[16px]"
+										>arrow_upward</span
+									>
+									+12%
+								</span>
+							</div>
+							<p
+								class="text-on-surface-variant text-label-md uppercase font-bold tracking-wider">
+								Missionary Engagement
+							</p>
+							<h3 class="text-[28px] font-bold text-primary">2,842</h3>
+							<p class="text-[11px] text-on-surface-variant mt-xs">
+								Active participants this week
+							</p>
+						</div>
+						<div
+							class="bg-white p-lg rounded-xl card-shadow border border-outline-variant/30 group">
+							<div class="flex justify-between items-start mb-md">
+								<div
+									class="bg-primary/5 p-sm rounded-lg group-hover:bg-primary/10 transition-colors">
+									<span class="material-symbols-outlined text-primary"
+										>map</span
+									>
+								</div>
+								<span
+									class="text-secondary text-label-md font-bold flex items-center gap-xs">
+									<span class="material-symbols-outlined text-[16px]"
+										>trending_up</span
+									>
+									+5.4%
+								</span>
+							</div>
+							<p
+								class="text-on-surface-variant text-label-md uppercase font-bold tracking-wider">
+								Regional Growth
+							</p>
+							<h3 class="text-[28px] font-bold text-primary">14 Regions</h3>
+							<p class="text-[11px] text-on-surface-variant mt-xs">
+								3 regions reached peak efficiency
+							</p>
+						</div>
+						<div
+							class="bg-white p-lg rounded-xl card-shadow border border-outline-variant/30 group">
+							<div class="flex justify-between items-start mb-md">
+								<div
+									class="bg-primary/5 p-sm rounded-lg group-hover:bg-primary/10 transition-colors">
+									<span class="material-symbols-outlined text-primary"
+										>bolt</span
+									>
+								</div>
+								<span
+									class="text-error text-label-md font-bold flex items-center gap-xs">
+									<span class="material-symbols-outlined text-[16px]"
+										>arrow_downward</span
+									>
+									-2.1%
+								</span>
+							</div>
+							<p
+								class="text-on-surface-variant text-label-md uppercase font-bold tracking-wider">
+								Team Efficiency
+							</p>
+							<h3 class="text-[28px] font-bold text-primary">
+								89.4 <span class="text-body-md font-medium">pts</span>
+							</h3>
+							<p class="text-[11px] text-on-surface-variant mt-xs">
+								Average score across departments
+							</p>
+						</div>
+						<div
+							class="bg-white p-lg rounded-xl card-shadow border border-outline-variant/30 group">
+							<div class="flex justify-between items-start mb-md">
+								<div
+									class="bg-primary/5 p-sm rounded-lg group-hover:bg-primary/10 transition-colors">
+									<span class="material-symbols-outlined text-primary"
+										>verified_user</span
+									>
+								</div>
+								<span
+									class="text-secondary text-label-md font-bold flex items-center gap-xs">
+									Stable
+								</span>
+							</div>
+							<p
+								class="text-on-surface-variant text-label-md uppercase font-bold tracking-wider">
+								Master Compliance
+							</p>
+							<h3 class="text-[28px] font-bold text-primary">98.2%</h3>
+							<p class="text-[11px] text-on-surface-variant mt-xs">
+								Organization-wide standards
+							</p>
+						</div>
+					</div>
+					<!-- Regional Performance Visualization -->
+					<div
+						class="col-span-8 bg-white rounded-xl card-shadow border border-outline-variant/30 overflow-hidden">
+						<div
+							class="p-lg border-b border-outline-variant/30 flex justify-between items-center">
+							<h3 class="font-h2 text-h2 text-primary">
+								Regional Growth &amp; Engagement
+							</h3>
+							<div class="flex gap-md">
+								<div class="flex items-center gap-xs">
+									<span class="w-3 h-3 rounded-full bg-primary"></span>
+									<span class="text-label-md text-on-surface-variant"
+										>Actual</span
+									>
+								</div>
+								<div class="flex items-center gap-xs">
+									<span class="w-3 h-3 rounded-full bg-secondary-fixed"></span>
+									<span class="text-label-md text-on-surface-variant"
+										>Target</span
+									>
+								</div>
+							</div>
+						</div>
+						<div
+							class="p-lg relative h-[320px] flex items-end justify-around gap-lg">
+							<!-- Mock Bar Chart -->
+							<div class="flex flex-col items-center gap-sm flex-1">
+								<div
+									class="relative w-full flex items-end justify-center gap-xs h-[240px]">
+									<div
+										class="w-8 bg-primary rounded-t-sm"
+										style="height: 60%"></div>
+									<div
+										class="w-8 bg-secondary-fixed/40 rounded-t-sm"
+										style="height: 80%"></div>
+								</div>
+								<span
+									class="text-label-md font-bold text-on-surface-variant uppercase"
+									>Metro</span
+								>
+							</div>
+							<div class="flex flex-col items-center gap-sm flex-1">
+								<div
+									class="relative w-full flex items-end justify-center gap-xs h-[240px]">
+									<div
+										class="w-8 bg-primary rounded-t-sm"
+										style="height: 90%"></div>
+									<div
+										class="w-8 bg-secondary-fixed/40 rounded-t-sm"
+										style="height: 75%"></div>
+								</div>
+								<span
+									class="text-label-md font-bold text-on-surface-variant uppercase"
+									>Luzon</span
+								>
+							</div>
+							<div class="flex flex-col items-center gap-sm flex-1">
+								<div
+									class="relative w-full flex items-end justify-center gap-xs h-[240px]">
+									<div
+										class="w-8 bg-primary rounded-t-sm"
+										style="height: 45%"></div>
+									<div
+										class="w-8 bg-secondary-fixed/40 rounded-t-sm"
+										style="height: 65%"></div>
+								</div>
+								<span
+									class="text-label-md font-bold text-on-surface-variant uppercase"
+									>Visayas</span
+								>
+							</div>
+							<div class="flex flex-col items-center gap-sm flex-1">
+								<div
+									class="relative w-full flex items-end justify-center gap-xs h-[240px]">
+									<div
+										class="w-8 bg-primary rounded-t-sm"
+										style="height: 82%"></div>
+									<div
+										class="w-8 bg-secondary-fixed/40 rounded-t-sm"
+										style="height: 85%"></div>
+								</div>
+								<span
+									class="text-label-md font-bold text-on-surface-variant uppercase"
+									>Mindanao</span
+								>
+							</div>
+							<div class="flex flex-col items-center gap-sm flex-1">
+								<div
+									class="relative w-full flex items-end justify-center gap-xs h-[240px]">
+									<div
+										class="w-8 bg-primary rounded-t-sm"
+										style="height: 70%"></div>
+									<div
+										class="w-8 bg-secondary-fixed/40 rounded-t-sm"
+										style="height: 90%"></div>
+								</div>
+								<span
+									class="text-label-md font-bold text-on-surface-variant uppercase"
+									>South</span
+								>
+							</div>
+							<!-- Horizontal Grid Lines -->
+							<div
+								class="absolute inset-x-lg top-lg bottom-12 flex flex-col justify-between pointer-events-none opacity-10">
+								<div class="border-t border-on-surface w-full"></div>
+								<div class="border-t border-on-surface w-full"></div>
+								<div class="border-t border-on-surface w-full"></div>
+								<div class="border-t border-on-surface w-full"></div>
+							</div>
+						</div>
+					</div>
+					<!-- Personnel Leaderboard -->
+					<div
+						class="col-span-4 bg-white rounded-xl card-shadow border border-outline-variant/30 flex flex-col">
+						<div class="p-lg border-b border-outline-variant/30">
+							<h3 class="font-h2 text-h2 text-primary">Top Performers</h3>
+							<p class="text-label-md text-on-surface-variant">
+								Missionaries of the month
+							</p>
+						</div>
+						<div
+							class="flex-1 overflow-y-auto custom-scrollbar p-md space-y-md">
+							<!-- Performer 1 -->
+							<div
+								class="flex items-center gap-md p-md rounded-lg hover:bg-surface-container-low transition-colors group">
+								<div class="relative">
+									<img
+										class="w-10 h-10 rounded-full object-cover"
+										data-alt="Close up portrait of a young professional woman of Asian descent, smiling warmly. She is wearing a modern business casual olive green top. The lighting is bright and airy with a minimalist background. High-quality professional corporate photography style."
+										src="https://lh3.googleusercontent.com/aida-public/AB6AXuD--2RC4eHq-3g3pn2JvlQcNx6bVDM1cEz_N6g8QX0I9nK6QTNj7ckBnOMt0eDFB_CBNZRa9Be2F-OCNZdMbUmM-ySzVOSQWI1YH9y1jM-AT6-hoj-fJPt639uFrbzKKCNWU8SifJACXHghAuIaQ_RPiicoBXcp_676VGD6eUgUNilqzgcoMgprd9bGtoRmM0sinbtmEdoLB3fCHU9X8aQ7waOhEbyWqAzTI7YiFrLgbA02oeJPvXqsLJeU2vUQyOfYAnlEBzqZNsOp" />
+									<div
+										class="absolute -bottom-1 -right-1 w-5 h-5 bg-secondary text-white text-[10px] rounded-full flex items-center justify-center font-bold ring-2 ring-white">
+										1
+									</div>
+								</div>
+								<div class="flex-1">
+									<p
+										class="text-body-md font-bold text-on-surface leading-tight">
+										Sarah Chen
+									</p>
+									<p class="text-label-md text-on-surface-variant">
+										Metro Region
+									</p>
+								</div>
+								<div class="text-right">
+									<p class="text-body-md font-bold text-primary">98.4</p>
+									<p class="text-[10px] text-secondary uppercase font-bold">
+										Excellent
+									</p>
+								</div>
+							</div>
+							<!-- Performer 2 -->
+							<div
+								class="flex items-center gap-md p-md rounded-lg hover:bg-surface-container-low transition-colors">
+								<div class="relative">
+									<img
+										class="w-10 h-10 rounded-full object-cover"
+										data-alt="A portrait of a young Hispanic man in a light grey linen shirt, looking directly at the camera with a calm and professional expression. The photo is taken in an outdoor setting with blurred green foliage in the background, creating a soft, natural bokeh effect. The lighting is soft morning sun."
+										src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-VY42-RIdv2AVzo_hmTZ8hKSsaKsRiIIshFBvqdkfCe3qSR3ZcFasN7-xrIZ43X3m6_Rf1mBTKSZsLeisHjRDQfJ40umxIMpHl4v--Fcj6pbQbuC8-e5Drc4nnW1ktVwKrJT7v1Ybf8XfZp2FlX2uq_uCs5LSc3PxxEQera0CoqDRWr6q2T37qHFnnnwvfYEkDx-U2HVD9wkBkdPfnEfBPI3ohOm4sAU65lA43uBUwNUbdcEy_2cZE9VNndMKjfKEmshNb26TkfvM" />
+									<div
+										class="absolute -bottom-1 -right-1 w-5 h-5 bg-primary text-white text-[10px] rounded-full flex items-center justify-center font-bold ring-2 ring-white">
+										2
+									</div>
+								</div>
+								<div class="flex-1">
+									<p
+										class="text-body-md font-bold text-on-surface leading-tight">
+										Marcus Rodriguez
+									</p>
+									<p class="text-label-md text-on-surface-variant">
+										Mindanao Region
+									</p>
+								</div>
+								<div class="text-right">
+									<p class="text-body-md font-bold text-primary">96.1</p>
+									<p class="text-[10px] text-secondary uppercase font-bold">
+										Rising
+									</p>
+								</div>
+							</div>
+							<!-- Performer 3 -->
+							<div
+								class="flex items-center gap-md p-md rounded-lg hover:bg-surface-container-low transition-colors">
+								<div class="relative">
+									<img
+										class="w-10 h-10 rounded-full object-cover"
+										data-alt="Studio portrait of a middle-aged woman with dark curly hair and glasses, wearing a deep forest green formal dress. She has an approachable and intellectual look. The background is a solid light grey, emphasized by clean studio lighting that highlights her professional demeanor."
+										src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtf9p9TAliuxIpWew3OtyG9ZVUav_YcJWoCsGIbC6BM5SBuIgEaCpYMqNJXvSKUxkP66qpSYljawBwSRflIjnj8ILhOSTQWTBIFqKWxiDM95gdhP8ivzgEmgmUL-NIRLRnZ1XECKO3_FSpV4tVk7SbMLQOlAC8WLEbABoySq1QgddOD7e338F8vQmK5fRjwZBRfJKAhRIYYt0A1P18fq2uoggDUc-h3yrx8VUmLmpTuxpI6nQ6l3m1vIpOEIjZq5MTioP5SPWqBLAa" />
+									<div
+										class="absolute -bottom-1 -right-1 w-5 h-5 bg-primary text-white text-[10px] rounded-full flex items-center justify-center font-bold ring-2 ring-white">
+										3
+									</div>
+								</div>
+								<div class="flex-1">
+									<p
+										class="text-body-md font-bold text-on-surface leading-tight">
+										Dr. Elena Rossi
+									</p>
+									<p class="text-label-md text-on-surface-variant">
+										Luzon Region
+									</p>
+								</div>
+								<div class="text-right">
+									<p class="text-body-md font-bold text-primary">95.8</p>
+									<p
+										class="text-[10px] text-on-surface-variant uppercase font-bold">
+										Stable
+									</p>
+								</div>
+							</div>
+						</div>
+						<button
+							class="m-lg py-sm border border-primary text-primary text-label-md font-bold rounded-lg hover:bg-primary hover:text-white transition-all uppercase tracking-wider">
+							View Full List
+						</button>
+					</div>
+					<!-- Recent Activity & Impact Map -->
+					<div class="col-span-12 grid grid-cols-12 gap-lg">
+						<div
+							class="col-span-4 bg-white rounded-xl card-shadow border border-outline-variant/30 p-lg">
+							<h3 class="font-h3 text-h3 text-primary mb-md">
+								Efficiency Trends
+							</h3>
+							<div class="space-y-lg">
+								<div class="relative pt-1">
+									<div class="flex mb-2 items-center justify-between">
+										<div>
+											<span
+												class="text-[10px] font-semibold inline-block py-1 px-2 uppercase rounded-full text-secondary bg-secondary-container">
+												Engagement Speed
+											</span>
+										</div>
+										<div class="text-right">
+											<span
+												class="text-xs font-semibold inline-block text-secondary">
+												85%
+											</span>
+										</div>
+									</div>
+									<div
+										class="overflow-hidden h-2 mb-4 text-xs flex rounded-full bg-surface-container-high">
+										<div
+											class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-secondary"
+											style="width: 85%"></div>
+									</div>
+								</div>
+								<div class="relative pt-1">
+									<div class="flex mb-2 items-center justify-between">
+										<div>
+											<span
+												class="text-[10px] font-semibold inline-block py-1 px-2 uppercase rounded-full text-primary bg-primary-fixed">
+												Reporting Accuracy
+											</span>
+										</div>
+										<div class="text-right">
+											<span
+												class="text-xs font-semibold inline-block text-primary">
+												92%
+											</span>
+										</div>
+									</div>
+									<div
+										class="overflow-hidden h-2 mb-4 text-xs flex rounded-full bg-surface-container-high">
+										<div
+											class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary"
+											style="width: 92%"></div>
+									</div>
+								</div>
+								<div class="relative pt-1">
+									<div class="flex mb-2 items-center justify-between">
+										<div>
+											<span
+												class="text-[10px] font-semibold inline-block py-1 px-2 uppercase rounded-full text-on-tertiary-container bg-tertiary-fixed">
+												Resource Allocation
+											</span>
+										</div>
+										<div class="text-right">
+											<span
+												class="text-xs font-semibold inline-block text-tertiary">
+												64%
+											</span>
+										</div>
+									</div>
+									<div
+										class="overflow-hidden h-2 mb-4 text-xs flex rounded-full bg-surface-container-high">
+										<div
+											class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-tertiary"
+											style="width: 64%"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div
+							class="col-span-8 bg-inverse-surface rounded-xl card-shadow overflow-hidden relative">
+							<div
+								class="absolute top-lg left-lg z-10 bg-white/10 backdrop-blur-md p-md rounded-lg border border-white/10">
+								<h3 class="text-white font-h3 text-h3">Regional Impact Map</h3>
+								<p class="text-white/60 text-label-md">
+									Density of active missionaries
+								</p>
+							</div>
+							<div
+								class="w-full h-full min-h-[300px] flex items-center justify-center bg-[#1a1c1a]">
+								<!-- Mock Map Visualization with data-location -->
+								<div class="relative w-full h-full overflow-hidden">
+									<img
+										class="w-full h-full object-cover opacity-40 mix-blend-luminosity"
+										data-alt="A stylized satellite view of a geographical region featuring islands and diverse topography, rendered in a high-contrast dark mode aesthetic. The map has glowing neon green dots representing activity hubs and data points. The lighting is cinematic with a focus on glowing highlights against a deep black and charcoal background. Digital cartography style."
+										src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIDWBrgXVYzfiI7suHzICe_X-mObTiLbCrku1nKMVq2HegZtIDvRHMS9LbffaKL8oisi-nn2OWufTREAejwB4ljNScXJLnlE-CudvCX-RnerDKepdGUKcZbB76mCuZARSUAxOvd0fHxoS3RPBKc4eW-dfkzKWTh_KV2mlPsEWA7MYo1WmSDGHTYG3hH58YEZVloRbfWYg3kHVzXs7jROYa_DjTNbVYJCNsHnejqpiU0HaaNyl6FV0DxdLUHcBB0DT9DVl9MClulZlG" />
+									<!-- Glowing Pointers -->
+									<div
+										class="absolute top-1/4 left-1/3 w-3 h-3 bg-secondary-fixed rounded-full animate-pulse shadow-[0_0_15px_#a3f69c]"></div>
+									<div
+										class="absolute top-1/2 left-1/2 w-4 h-4 bg-secondary-fixed rounded-full animate-pulse shadow-[0_0_20px_#a3f69c]"></div>
+									<div
+										class="absolute bottom-1/4 right-1/4 w-3 h-3 bg-secondary-fixed rounded-full animate-pulse shadow-[0_0_15px_#a3f69c]"></div>
+									<div
+										class="absolute top-1/3 right-1/3 w-2 h-2 bg-secondary-fixed rounded-full animate-pulse shadow-[0_0_10px_#a3f69c]"></div>
+								</div>
+							</div>
+							<div class="absolute bottom-lg right-lg flex gap-sm">
+								<div
+									class="bg-white/10 backdrop-blur-md px-md py-xs rounded-full border border-white/10 flex items-center gap-xs">
+									<span class="w-2 h-2 bg-secondary-fixed rounded-full"></span>
+									<span class="text-white text-[10px] font-bold"
+										>High Impact</span
+									>
+								</div>
+								<div
+									class="bg-white/10 backdrop-blur-md px-md py-xs rounded-full border border-white/10 flex items-center gap-xs">
+									<span class="w-2 h-2 bg-primary-fixed rounded-full"></span>
+									<span class="text-white text-[10px] font-bold">Growing</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Advanced Data Table -->
+				<section
+					class="bg-white rounded-xl card-shadow border border-outline-variant/30 overflow-hidden">
+					<div
+						class="p-lg border-b border-outline-variant/30 flex justify-between items-center">
+						<div class="flex items-center gap-md">
+							<h3 class="font-h2 text-h2 text-primary">
+								Departmental Breakdown
+							</h3>
+							<span
+								class="bg-surface-container-high text-on-surface-variant px-md py-xs rounded-full text-label-md font-bold"
+								>12 Total</span
+							>
+						</div>
+						<div class="flex gap-sm">
+							<button
+								class="p-xs hover:bg-surface-container-high rounded-lg transition-colors border border-outline-variant">
+								<span class="material-symbols-outlined text-[20px]"
+									>filter_list</span
+								>
+							</button>
+							<button
+								class="p-xs hover:bg-surface-container-high rounded-lg transition-colors border border-outline-variant">
+								<span class="material-symbols-outlined text-[20px]">sort</span>
+							</button>
+						</div>
+					</div>
+					<div class="overflow-x-auto">
+						<table class="w-full text-left border-collapse">
+							<thead>
+								<tr
+									class="bg-surface-container-low border-b border-outline-variant/30">
+									<th
+										class="px-lg py-md text-label-md font-bold uppercase tracking-wider text-on-surface-variant">
+										Department
+									</th>
+									<th
+										class="px-lg py-md text-label-md font-bold uppercase tracking-wider text-on-surface-variant">
+										Lead Personnel
+									</th>
+									<th
+										class="px-lg py-md text-label-md font-bold uppercase tracking-wider text-on-surface-variant text-center">
+										Active Count
+									</th>
+									<th
+										class="px-lg py-md text-label-md font-bold uppercase tracking-wider text-on-surface-variant">
+										Efficiency
+									</th>
+									<th
+										class="px-lg py-md text-label-md font-bold uppercase tracking-wider text-on-surface-variant">
+										Status
+									</th>
+									<th
+										class="px-lg py-md text-label-md font-bold uppercase tracking-wider text-on-surface-variant text-right">
+										Action
+									</th>
+								</tr>
+							</thead>
+							<tbody class="divide-y divide-surface-container">
+								<tr class="hover:bg-surface-container-low/50 transition-colors">
+									<td class="px-lg py-md">
+										<div class="flex items-center gap-md">
+											<div class="w-2 h-8 bg-secondary rounded-full"></div>
+											<div>
+												<p class="font-bold text-on-surface">Campus Outreach</p>
+												<p class="text-[11px] text-on-surface-variant">
+													Strategic Engagement
+												</p>
+											</div>
+										</div>
+									</td>
+									<td class="px-lg py-md text-body-md">Thomas Wright</td>
+									<td class="px-lg py-md text-center font-code">142</td>
+									<td class="px-lg py-md">
+										<div class="flex items-center gap-sm">
+											<div
+												class="flex-1 bg-surface-container-high h-1.5 rounded-full min-w-[80px]">
+												<div
+													class="bg-secondary w-[94%] h-full rounded-full"></div>
+											</div>
+											<span class="text-label-md font-bold">94%</span>
+										</div>
+									</td>
+									<td class="px-lg py-md">
+										<span
+											class="inline-flex items-center gap-xs px-md py-xs rounded-full bg-secondary-container text-on-secondary-container text-[11px] font-bold">
+											<span
+												class="w-1.5 h-1.5 bg-secondary rounded-full"></span>
+											Optimal
+										</span>
+									</td>
+									<td class="px-lg py-md text-right">
+										<button
+											class="text-primary hover:underline font-bold text-label-md">
+											Details
+										</button>
+									</td>
+								</tr>
+								<tr class="hover:bg-surface-container-low/50 transition-colors">
+									<td class="px-lg py-md">
+										<div class="flex items-center gap-md">
+											<div class="w-2 h-8 bg-primary rounded-full"></div>
+											<div>
+												<p class="font-bold text-on-surface">
+													Student Leadership
+												</p>
+												<p class="text-[11px] text-on-surface-variant">
+													Leadership Dev
+												</p>
+											</div>
+										</div>
+									</td>
+									<td class="px-lg py-md text-body-md">Linda Gomez</td>
+									<td class="px-lg py-md text-center font-code">86</td>
+									<td class="px-lg py-md">
+										<div class="flex items-center gap-sm">
+											<div
+												class="flex-1 bg-surface-container-high h-1.5 rounded-full min-w-[80px]">
+												<div
+													class="bg-primary w-[88%] h-full rounded-full"></div>
+											</div>
+											<span class="text-label-md font-bold">88%</span>
+										</div>
+									</td>
+									<td class="px-lg py-md">
+										<span
+											class="inline-flex items-center gap-xs px-md py-xs rounded-full bg-secondary-container text-on-secondary-container text-[11px] font-bold">
+											<span
+												class="w-1.5 h-1.5 bg-secondary rounded-full"></span>
+											Optimal
+										</span>
+									</td>
+									<td class="px-lg py-md text-right">
+										<button
+											class="text-primary hover:underline font-bold text-label-md">
+											Details
+										</button>
+									</td>
+								</tr>
+								<tr class="hover:bg-surface-container-low/50 transition-colors">
+									<td class="px-lg py-md">
+										<div class="flex items-center gap-md">
+											<div class="w-2 h-8 bg-tertiary rounded-full"></div>
+											<div>
+												<p class="font-bold text-on-surface">
+													Digital Ministry
+												</p>
+												<p class="text-[11px] text-on-surface-variant">
+													Online Expansion
+												</p>
+											</div>
+										</div>
+									</td>
+									<td class="px-lg py-md text-body-md">Kevin Park</td>
+									<td class="px-lg py-md text-center font-code">412</td>
+									<td class="px-lg py-md">
+										<div class="flex items-center gap-sm">
+											<div
+												class="flex-1 bg-surface-container-high h-1.5 rounded-full min-w-[80px]">
+												<div
+													class="bg-tertiary w-[72%] h-full rounded-full"></div>
+											</div>
+											<span class="text-label-md font-bold">72%</span>
+										</div>
+									</td>
+									<td class="px-lg py-md">
+										<span
+											class="inline-flex items-center gap-xs px-md py-xs rounded-full bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">
+											<span class="w-1.5 h-1.5 bg-outline rounded-full"></span>
+											Average
+										</span>
+									</td>
+									<td class="px-lg py-md text-right">
+										<button
+											class="text-primary hover:underline font-bold text-label-md">
+											Details
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</section>
+			</main>
+			<!-- Footer -->
+			<footer
+				class="mt-auto border-t border-outline-variant/30 py-md px-lg flex justify-between items-center bg-white/50">
+				<p
+					class="text-on-surface-variant text-[11px] font-medium tracking-wide">
+					© 2024 PSALM Administrative Portal. All Rights Reserved.
+				</p>
+				<div class="flex gap-lg">
+					<a
+						class="text-[11px] font-bold text-primary uppercase hover:underline"
+						href="#"
+						>Privacy Policy</a
+					>
+					<a
+						class="text-[11px] font-bold text-primary uppercase hover:underline"
+						href="#"
+						>System Status</a
+					>
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>

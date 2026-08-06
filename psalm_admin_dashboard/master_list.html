@@ -1,0 +1,880 @@
+<!doctype html>
+
+<html class="light" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+		<title>Master List | PSALM Admin Portal</title>
+		<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono&amp;display=swap"
+			rel="stylesheet" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+			rel="stylesheet" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+			rel="stylesheet" />
+		<script id="tailwind-config">
+			tailwind.config = {
+				darkMode: "class",
+				theme: {
+					extend: {
+						colors: {
+							"surface-container": "#ecefea",
+							surface: "#f8faf5",
+							"on-surface-variant": "#404942",
+							"surface-tint": "#296a4a",
+							secondary: "#1b6d24",
+							"surface-variant": "#e1e3de",
+							"on-secondary-fixed": "#002204",
+							"inverse-on-surface": "#eff1ed",
+							primary: "#00341f",
+							"on-secondary-container": "#217128",
+							"surface-container-highest": "#e1e3de",
+							"primary-container": "#004d30",
+							"on-error-container": "#93000a",
+							outline: "#707972",
+							"on-error": "#ffffff",
+							"tertiary-container": "#264939",
+							"surface-bright": "#f8faf5",
+							"tertiary-fixed": "#c4ecd5",
+							"on-primary-fixed-variant": "#085134",
+							"error-container": "#ffdad6",
+							"on-tertiary": "#ffffff",
+							"on-tertiary-fixed": "#002114",
+							"on-tertiary-fixed-variant": "#2a4e3d",
+							"inverse-primary": "#93d5ae",
+							"on-surface": "#191c1a",
+							"tertiary-fixed-dim": "#a8cfba",
+							"inverse-surface": "#2e312e",
+							"surface-container-lowest": "#ffffff",
+							"outline-variant": "#bfc9c0",
+							tertiary: "#0d3224",
+							"on-primary-container": "#7cbd98",
+							"on-tertiary-container": "#91b7a3",
+							"primary-fixed": "#aef1c9",
+							"secondary-fixed-dim": "#88d982",
+							"on-secondary": "#ffffff",
+							"on-background": "#191c1a",
+							background: "#f8faf5",
+							"primary-fixed-dim": "#93d5ae",
+							"secondary-fixed": "#a3f69c",
+							"surface-container-high": "#e6e9e4",
+							error: "#ba1a1a",
+							"surface-dim": "#d8dbd6",
+							"on-primary-fixed": "#002112",
+							"on-primary": "#ffffff",
+							"surface-container-low": "#f2f4ef",
+							"on-secondary-fixed-variant": "#005312",
+							"secondary-container": "#a0f399",
+						},
+						borderRadius: {
+							DEFAULT: "0.125rem",
+							lg: "0.25rem",
+							xl: "0.5rem",
+							full: "0.75rem",
+						},
+						spacing: {
+							xl: "32px",
+							gutter: "16px",
+							md: "16px",
+							xs: "4px",
+							sm: "12px",
+							lg: "24px",
+							base: "8px",
+							"sidebar-width": "260px",
+							"container-padding": "24px",
+						},
+						fontFamily: {
+							h1: ["Inter"],
+							"label-md": ["Inter"],
+							h2: ["Inter"],
+							"body-md": ["Inter"],
+							h3: ["Inter"],
+							code: ["JetBrains Mono"],
+							"body-sm": ["Inter"],
+						},
+						fontSize: {
+							h1: [
+								"24px",
+								{
+									lineHeight: "32px",
+									letterSpacing: "-0.02em",
+									fontWeight: "600",
+								},
+							],
+							"label-md": [
+								"12px",
+								{
+									lineHeight: "16px",
+									letterSpacing: "0.05em",
+									fontWeight: "500",
+								},
+							],
+							h2: [
+								"20px",
+								{
+									lineHeight: "28px",
+									letterSpacing: "-0.01em",
+									fontWeight: "600",
+								},
+							],
+							"body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+							h3: ["16px", { lineHeight: "24px", fontWeight: "600" }],
+							code: ["13px", { lineHeight: "20px", fontWeight: "400" }],
+							"body-sm": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+						},
+					},
+				},
+			};
+		</script>
+		<style>
+			.material-symbols-outlined {
+				font-variation-settings:
+					"FILL" 0,
+					"wght" 400,
+					"GRAD" 0,
+					"opsz" 24;
+			}
+			.sidebar-active {
+				background-color: rgba(255, 255, 255, 0.1);
+				border-left: 4px solid white;
+				color: white;
+				font-weight: 700;
+			}
+			.table-shadow {
+				box-shadow:
+					0px 1px 3px rgba(0, 0, 0, 0.05),
+					0px 4px 6px rgba(0, 0, 0, 0.02);
+			}
+		</style>
+	</head>
+	<body
+		class="bg-background font-body-md text-on-surface antialiased overflow-hidden">
+		<!-- BEGIN: Sidebar -->
+		<aside
+			class="fixed inset-y-0 left-0 z-50 w-64 bg-[#064e3b] text-white transition-all duration-300 transform lg:translate-x-0 -translate-x-full lg:inset-0"
+			data-purpose="navigation-sidebar"
+			id="sidebar">
+			<div class="flex items-center justify-between h-16 px-6 bg-[#064e3b]">
+				<span class="text-2xl font-bold tracking-wider">PSALM</span
+				><button
+					class="hidden lg:flex p-1 hover:bg-green-800 rounded transition-colors ml-auto"
+					id="sidebar-collapse-toggle">
+					<span class="material-symbols-outlined">chevron_left</span>
+				</button>
+			</div>
+			<nav class="mt-4 px-2 space-y-1 overflow-y-auto max-h-[calc(100vh-80px)]">
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="admin_dashboard.html">
+					<svg
+						class="w-5 h-5 mr-3"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+					</svg>
+					Dashboard
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="departments.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+					</svg>
+					Departments
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="board_of_trustees.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+					</svg>
+					Board of Trustees
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="campus_missionaries.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+					</svg>
+					Campus Missionaries
+				</a>
+				<a
+					class="flex items-center px-4 py-3 bg-white text-emerald-900 rounded-sm font-semibold transition-colors duration-200"
+					href="master_list.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+					</svg>
+					Master List
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="statistics.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0h6m2 0h2a2 2 0 002-2v-7a2 2 0 00-2-2h-2a2 2 0 00-2 2v7a2 2 0 002 2z"></path>
+					</svg>
+					Statistics
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="training.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+					</svg>
+					Training
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="partnership_development.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+					</svg>
+					Partnership Development
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="team.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+					</svg>
+					Team Analytics
+				</a>
+				<a
+					class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+					href="user_management.html">
+					<svg
+						class="w-5 h-5 mr-3 opacity-80"
+						fill="none"
+						stroke="currentColor"
+						viewbox="0 0 24 24">
+						<path
+							d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+					</svg>
+					User &amp; Role Management
+				</a>
+			</nav>
+			<div class="mt-auto px-4 space-y-4">
+				<div class="pt-4 border-t border-white/10 space-y-1">
+					<a
+						class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+						href="settings.html">
+						<svg
+							class="w-5 h-5 mr-3 opacity-80"
+							fill="none"
+							stroke="currentColor"
+							viewbox="0 0 24 24">
+							<path
+								d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+							<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+						</svg>
+						Settings
+					</a>
+					<a
+						class="flex items-center px-4 py-2 hover:bg-green-800 rounded-sm text-sm transition-colors duration-200"
+						href="logout.html">
+						<svg
+							class="w-5 h-5 mr-3 opacity-80"
+							fill="none"
+							stroke="currentColor"
+							viewbox="0 0 24 24">
+							<path
+								d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+						</svg>
+						Logout
+					</a>
+				</div>
+			</div>
+		</aside>
+		<!-- END: Sidebar -->
+		<!-- Main Content Area -->
+		<main class="ml-sidebar-width flex flex-col h-screen">
+			<!-- TopNavBar -->
+			<header
+				class="flex justify-between items-center px-lg py-md w-full bg-surface border-b border-outline-variant z-40">
+				<div class="flex items-center gap-lg flex-1">
+					<h2 class="font-h2 text-h2 font-black text-primary">PSALM Admin</h2>
+					<div
+						class="relative w-full max-w-md focus-within:ring-2 focus-within:ring-primary/20 rounded-xl transition-all">
+						<span
+							class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm"
+							>search</span
+						>
+						<input
+							class="w-full bg-surface-container-low border border-outline-variant rounded-xl pl-10 pr-4 py-2 text-body-md focus:outline-none focus:border-primary transition-colors"
+							placeholder="Global search for records, IDs, or members..."
+							type="text" />
+					</div>
+				</div>
+				<div class="flex items-center gap-md">
+					<button
+						class="h-10 w-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors">
+						<span
+							class="material-symbols-outlined text-on-surface-variant"
+							data-icon="notifications"
+							>notifications</span
+						>
+					</button>
+					<button
+						class="h-10 w-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors">
+						<span
+							class="material-symbols-outlined text-on-surface-variant"
+							data-icon="help_outline"
+							>help_outline</span
+						>
+					</button>
+					<button
+						class="h-10 w-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors">
+						<span
+							class="material-symbols-outlined text-on-surface-variant"
+							data-icon="settings"
+							>settings</span
+						>
+					</button>
+					<div class="h-8 w-[1px] bg-outline-variant mx-2"></div>
+					<div class="flex items-center gap-sm">
+						<img
+							alt="Administrator Profile"
+							class="h-8 w-8 rounded-full border border-outline-variant"
+							data-alt="A professional headshot of a focused male administrator in a modern office environment. The image is bright and crisp, with soft natural light streaming through large windows. He wears professional attire, and the overall aesthetic is corporate, clean, and trustworthy, reflecting a high-performance workspace."
+							src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoLwliA7I8A7fdswq7r2eC-sKfPsVAkiHgp6mAdJ64m5xNE5ta4NhJHllWGH9rRXVZovyC3rmCjmuj98prQW2NPUguc_UbPm6uc-xm4Pgx7-9vlX2aq6CHdHPo_h3PBgTUBWoWMCodn0hTr4Fy-JSZ15Fmv2T4aUccSAyrSnlYJrEZeO3jQORslzDZLBmEVxXBXXF85hseQTKCGMesMnAx4QQfAA_7EbONNntbiHNP5xWRkn1s6FimoOT0mAqsWvr4i8_fKe4u6GKb" />
+						<div class="flex flex-col">
+							<span class="font-label-md text-on-surface">Alex Thompson</span>
+							<span
+								class="text-[10px] text-on-surface-variant font-bold uppercase tracking-tighter leading-none"
+								>Senior Admin</span
+							>
+						</div>
+					</div>
+				</div>
+			</header>
+			<!-- Canvas -->
+			<section class="flex-grow p-lg bg-background overflow-y-auto">
+				<!-- Page Header Actions -->
+				<div class="flex justify-between items-end mb-lg">
+					<div class="flex flex-col gap-1">
+						<span
+							class="font-label-md text-secondary font-bold uppercase tracking-widest"
+							>Master Repository</span
+						>
+						<h1 class="font-h1 text-h1 text-primary">Master List Records</h1>
+					</div>
+					<div class="flex gap-sm">
+						<button
+							class="flex items-center gap-xs px-md py-base bg-surface-container-highest border border-outline-variant rounded-xl font-label-md hover:bg-surface-container-high transition-all">
+							<span
+								class="material-symbols-outlined text-sm"
+								data-icon="file_download"
+								>file_download</span
+							>
+							Export CSV
+						</button>
+						<button
+							class="flex items-center gap-xs px-lg py-base bg-primary text-white rounded-xl font-label-md shadow-sm hover:bg-primary-container transition-all active:scale-[0.98]">
+							<span
+								class="material-symbols-outlined text-sm"
+								data-icon="add_circle"
+								>add_circle</span
+							>
+							Create New Record
+						</button>
+					</div>
+				</div>
+				<!-- Dashboard Utility Bar -->
+				<div
+					class="bg-white rounded-xl border border-outline-variant mb-md p-sm flex items-center justify-between table-shadow">
+					<div class="flex items-center gap-md">
+						<div
+							class="flex items-center gap-xs bg-surface-container px-sm py-xs rounded-lg border border-outline-variant/30">
+							<span class="font-label-md text-on-surface-variant"
+								>Filters:</span
+							>
+							<span
+								class="bg-primary-container text-white px-2 py-0.5 rounded text-[10px] font-bold"
+								>Status: Active</span
+							>
+							<button
+								class="material-symbols-outlined text-sm text-on-surface-variant hover:text-error">
+								close
+							</button>
+						</div>
+						<button
+							class="flex items-center gap-xs text-on-surface-variant hover:text-primary font-label-md transition-colors">
+							<span class="material-symbols-outlined text-sm">filter_alt</span>
+							Advanced Filters
+						</button>
+					</div>
+					<div class="flex items-center gap-sm">
+						<span class="text-body-sm text-on-surface-variant"
+							>Showing 1-15 of 1,248</span
+						>
+						<div class="flex gap-1">
+							<button
+								class="h-8 w-8 flex items-center justify-center border border-outline-variant rounded-lg hover:bg-surface-container transition-colors disabled:opacity-30"
+								disabled="">
+								<span class="material-symbols-outlined text-sm"
+									>chevron_left</span
+								>
+							</button>
+							<button
+								class="h-8 w-8 flex items-center justify-center border border-outline-variant rounded-lg hover:bg-surface-container transition-colors">
+								<span class="material-symbols-outlined text-sm"
+									>chevron_right</span
+								>
+							</button>
+						</div>
+					</div>
+				</div>
+				<!-- Data Table Card -->
+				<div
+					class="bg-white rounded-xl border border-outline-variant table-shadow overflow-hidden">
+					<table class="w-full text-left border-collapse">
+						<thead>
+							<tr
+								class="bg-surface-container-low border-b border-outline-variant">
+								<th class="p-md w-12">
+									<div class="flex items-center justify-center">
+										<input
+											class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4"
+											type="checkbox" />
+									</div>
+								</th>
+								<th
+									class="p-md font-label-md text-on-surface-variant uppercase tracking-wider">
+									ID
+								</th>
+								<th
+									class="p-md font-label-md text-on-surface-variant uppercase tracking-wider">
+									Record Name
+								</th>
+								<th
+									class="p-md font-label-md text-on-surface-variant uppercase tracking-wider">
+									Type
+								</th>
+								<th
+									class="p-md font-label-md text-on-surface-variant uppercase tracking-wider">
+									Status
+								</th>
+								<th
+									class="p-md font-label-md text-on-surface-variant uppercase tracking-wider">
+									Date Created
+								</th>
+								<th
+									class="p-md font-label-md text-on-surface-variant uppercase tracking-wider text-right">
+									Actions
+								</th>
+							</tr>
+						</thead>
+						<tbody class="divide-y divide-surface-container">
+							<!-- Table Rows -->
+							<tr
+								class="hover:bg-surface-container-low transition-colors group">
+								<td class="p-md text-center">
+									<input
+										class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4"
+										type="checkbox" />
+								</td>
+								<td class="p-md font-code text-on-surface-variant">#PS-8802</td>
+								<td class="p-md">
+									<div class="flex items-center gap-md">
+										<div
+											class="h-8 w-8 rounded-lg bg-primary-fixed flex items-center justify-center text-primary-container font-bold text-xs">
+											BT
+										</div>
+										<div class="flex flex-col">
+											<span class="font-h3 text-on-surface"
+												>Benjamin Thorne</span
+											>
+											<span class="text-xs text-on-surface-variant"
+												>ben.thorne@psalm.org</span
+											>
+										</div>
+									</div>
+								</td>
+								<td class="p-md">
+									<span
+										class="px-sm py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant text-[11px] font-bold uppercase tracking-tight"
+										>Trustee</span
+									>
+								</td>
+								<td class="p-md">
+									<div class="flex items-center gap-xs text-secondary">
+										<div class="h-2 w-2 rounded-full bg-secondary"></div>
+										<span class="font-label-md">Active</span>
+									</div>
+								</td>
+								<td class="p-md text-body-sm text-on-surface-variant">
+									Oct 24, 2023
+								</td>
+								<td class="p-md text-right">
+									<button
+										class="h-8 w-8 rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant group-hover:text-primary">
+										<span class="material-symbols-outlined text-sm"
+											>more_vert</span
+										>
+									</button>
+								</td>
+							</tr>
+							<tr
+								class="hover:bg-surface-container-low transition-colors group">
+								<td class="p-md text-center">
+									<input
+										class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4"
+										type="checkbox" />
+								</td>
+								<td class="p-md font-code text-on-surface-variant">#PS-8741</td>
+								<td class="p-md">
+									<div class="flex items-center gap-md">
+										<div
+											class="h-8 w-8 rounded-lg bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xs">
+											DL
+										</div>
+										<div class="flex flex-col">
+											<span class="font-h3 text-on-surface"
+												>Digital Logistics Dept.</span
+											>
+											<span class="text-xs text-on-surface-variant"
+												>dept-id: ops-04</span
+											>
+										</div>
+									</div>
+								</td>
+								<td class="p-md">
+									<span
+										class="px-sm py-1 rounded-full bg-surface-container-highest text-on-surface-variant text-[11px] font-bold uppercase tracking-tight"
+										>Department</span
+									>
+								</td>
+								<td class="p-md">
+									<div class="flex items-center gap-xs text-secondary">
+										<div class="h-2 w-2 rounded-full bg-secondary"></div>
+										<span class="font-label-md">Active</span>
+									</div>
+								</td>
+								<td class="p-md text-body-sm text-on-surface-variant">
+									Nov 12, 2023
+								</td>
+								<td class="p-md text-right">
+									<button
+										class="h-8 w-8 rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant group-hover:text-primary">
+										<span class="material-symbols-outlined text-sm"
+											>more_vert</span
+										>
+									</button>
+								</td>
+							</tr>
+							<tr
+								class="hover:bg-surface-container-low transition-colors group">
+								<td class="p-md text-center">
+									<input
+										class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4"
+										type="checkbox" />
+								</td>
+								<td class="p-md font-code text-on-surface-variant">#PS-8692</td>
+								<td class="p-md">
+									<div class="flex items-center gap-md">
+										<div
+											class="h-8 w-8 rounded-lg bg-tertiary-fixed-dim flex items-center justify-center text-on-tertiary-fixed-variant font-bold text-xs">
+											SW
+										</div>
+										<div class="flex flex-col">
+											<span class="font-h3 text-on-surface"
+												>Sarah Williams</span
+											>
+											<span class="text-xs text-on-surface-variant"
+												>sarah.w@psalm.org</span
+											>
+										</div>
+									</div>
+								</td>
+								<td class="p-md">
+									<span
+										class="px-sm py-1 rounded-full bg-primary-fixed text-on-primary-fixed-variant text-[11px] font-bold uppercase tracking-tight"
+										>Missionary</span
+									>
+								</td>
+								<td class="p-md">
+									<div class="flex items-center gap-xs text-on-surface-variant">
+										<div class="h-2 w-2 rounded-full bg-outline"></div>
+										<span class="font-label-md">On Leave</span>
+									</div>
+								</td>
+								<td class="p-md text-body-sm text-on-surface-variant">
+									Dec 01, 2023
+								</td>
+								<td class="p-md text-right">
+									<button
+										class="h-8 w-8 rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant group-hover:text-primary">
+										<span class="material-symbols-outlined text-sm"
+											>more_vert</span
+										>
+									</button>
+								</td>
+							</tr>
+							<tr
+								class="hover:bg-surface-container-low transition-colors group">
+								<td class="p-md text-center">
+									<input
+										checked=""
+										class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4"
+										type="checkbox" />
+								</td>
+								<td class="p-md font-code text-on-surface-variant">#PS-8511</td>
+								<td class="p-md">
+									<div class="flex items-center gap-md">
+										<div
+											class="h-8 w-8 rounded-lg bg-error-container flex items-center justify-center text-on-error-container font-bold text-xs">
+											HM
+										</div>
+										<div class="flex flex-col">
+											<span class="font-h3 text-on-surface">Harvey Miller</span>
+											<span class="text-xs text-on-surface-variant"
+												>h.miller@psalm.org</span
+											>
+										</div>
+									</div>
+								</td>
+								<td class="p-md">
+									<span
+										class="px-sm py-1 rounded-full bg-primary-fixed text-on-primary-fixed-variant text-[11px] font-bold uppercase tracking-tight"
+										>Missionary</span
+									>
+								</td>
+								<td class="p-md">
+									<div class="flex items-center gap-xs text-error">
+										<div class="h-2 w-2 rounded-full bg-error"></div>
+										<span class="font-label-md">Deactivated</span>
+									</div>
+								</td>
+								<td class="p-md text-body-sm text-on-surface-variant">
+									Jan 14, 2024
+								</td>
+								<td class="p-md text-right">
+									<button
+										class="h-8 w-8 rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant group-hover:text-primary">
+										<span class="material-symbols-outlined text-sm"
+											>more_vert</span
+										>
+									</button>
+								</td>
+							</tr>
+							<tr
+								class="hover:bg-surface-container-low transition-colors group">
+								<td class="p-md text-center">
+									<input
+										class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4"
+										type="checkbox" />
+								</td>
+								<td class="p-md font-code text-on-surface-variant">#PS-8400</td>
+								<td class="p-md">
+									<div class="flex items-center gap-md">
+										<div
+											class="h-8 w-8 rounded-lg bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed font-bold text-xs">
+											CD
+										</div>
+										<div class="flex flex-col">
+											<span class="font-h3 text-on-surface"
+												>Campus Dev Dept.</span
+											>
+											<span class="text-xs text-on-surface-variant"
+												>dept-id: dev-01</span
+											>
+										</div>
+									</div>
+								</td>
+								<td class="p-md">
+									<span
+										class="px-sm py-1 rounded-full bg-surface-container-highest text-on-surface-variant text-[11px] font-bold uppercase tracking-tight"
+										>Department</span
+									>
+								</td>
+								<td class="p-md">
+									<div class="flex items-center gap-xs text-secondary">
+										<div class="h-2 w-2 rounded-full bg-secondary"></div>
+										<span class="font-label-md">Active</span>
+									</div>
+								</td>
+								<td class="p-md text-body-sm text-on-surface-variant">
+									Feb 02, 2024
+								</td>
+								<td class="p-md text-right">
+									<button
+										class="h-8 w-8 rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant group-hover:text-primary">
+										<span class="material-symbols-outlined text-sm"
+											>more_vert</span
+										>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<!-- Table Footer -->
+					<div
+						class="p-md bg-surface-container-low border-t border-outline-variant flex items-center justify-between">
+						<div class="flex items-center gap-md">
+							<span class="text-body-sm text-on-surface-variant font-medium"
+								>Bulk Actions:</span
+							>
+							<div class="flex gap-sm">
+								<button
+									class="px-md py-1 border border-outline-variant rounded-lg font-label-md text-on-surface-variant bg-white hover:bg-surface-container transition-all">
+									Archive
+								</button>
+								<button
+									class="px-md py-1 border border-error/20 rounded-lg font-label-md text-error bg-white hover:bg-error-container transition-all">
+									Delete
+								</button>
+							</div>
+						</div>
+						<div class="flex items-center gap-xs">
+							<button
+								class="h-8 px-3 flex items-center gap-1 border border-outline-variant rounded-lg text-body-sm font-medium hover:bg-surface-container transition-colors">
+								First
+							</button>
+							<button
+								class="h-8 w-8 flex items-center justify-center border border-outline-variant bg-primary text-white rounded-lg text-body-sm font-bold">
+								1
+							</button>
+							<button
+								class="h-8 w-8 flex items-center justify-center border border-outline-variant bg-white text-on-surface-variant rounded-lg text-body-sm hover:bg-surface-container transition-colors">
+								2
+							</button>
+							<button
+								class="h-8 w-8 flex items-center justify-center border border-outline-variant bg-white text-on-surface-variant rounded-lg text-body-sm hover:bg-surface-container transition-colors">
+								3
+							</button>
+							<span class="px-2 text-on-surface-variant">...</span>
+							<button
+								class="h-8 w-8 flex items-center justify-center border border-outline-variant bg-white text-on-surface-variant rounded-lg text-body-sm hover:bg-surface-container transition-colors">
+								84
+							</button>
+							<button
+								class="h-8 px-3 flex items-center gap-1 border border-outline-variant rounded-lg text-body-sm font-medium hover:bg-surface-container transition-colors">
+								Last
+							</button>
+						</div>
+					</div>
+				</div>
+				<!-- Quick Insights Row -->
+				<div class="mt-lg grid grid-cols-1 md:grid-cols-3 gap-lg">
+					<div
+						class="bg-white p-lg rounded-xl border border-outline-variant table-shadow flex items-center gap-lg">
+						<div
+							class="h-12 w-12 rounded-full bg-primary-container/10 flex items-center justify-center">
+							<span
+								class="material-symbols-outlined text-primary-container"
+								data-icon="analytics"
+								>analytics</span
+							>
+						</div>
+						<div class="flex flex-col">
+							<span
+								class="text-xs text-on-surface-variant font-bold uppercase tracking-wider"
+								>Growth Rate</span
+							>
+							<span class="font-h2 text-h2 text-primary">+12.5%</span>
+							<span class="text-[10px] text-secondary font-semibold"
+								>↑ Higher than last month</span
+							>
+						</div>
+					</div>
+					<div
+						class="bg-white p-lg rounded-xl border border-outline-variant table-shadow flex items-center gap-lg">
+						<div
+							class="h-12 w-12 rounded-full bg-tertiary-container/10 flex items-center justify-center">
+							<span
+								class="material-symbols-outlined text-tertiary-container"
+								data-icon="verified_user"
+								>verified_user</span
+							>
+						</div>
+						<div class="flex flex-col">
+							<span
+								class="text-xs text-on-surface-variant font-bold uppercase tracking-wider"
+								>Active Records</span
+							>
+							<span class="font-h2 text-h2 text-primary">894</span>
+							<span class="text-[10px] text-on-surface-variant font-semibold"
+								>92% of total database</span
+							>
+						</div>
+					</div>
+					<div
+						class="bg-white p-lg rounded-xl border border-outline-variant table-shadow flex items-center gap-lg">
+						<div
+							class="h-12 w-12 rounded-full bg-error-container/10 flex items-center justify-center">
+							<span
+								class="material-symbols-outlined text-error"
+								data-icon="pending_actions"
+								>pending_actions</span
+							>
+						</div>
+						<div class="flex flex-col">
+							<span
+								class="text-xs text-on-surface-variant font-bold uppercase tracking-wider"
+								>Pending Reviews</span
+							>
+							<span class="font-h2 text-h2 text-primary">12</span>
+							<span class="text-[10px] text-error font-semibold"
+								>Requires immediate action</span
+							>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+		<!-- Contextual FAB -->
+		<button
+			class="fixed bottom-lg right-lg h-14 w-14 bg-primary text-white rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-50 group">
+			<span class="material-symbols-outlined text-2xl" data-icon="add"
+				>add</span
+			>
+			<span
+				class="absolute right-full mr-4 bg-primary-container text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none"
+				>Add New Entry</span
+			>
+		</button>
+	</body>
+</html>
